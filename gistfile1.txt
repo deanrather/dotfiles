@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# bash -c "$(curl -fsSL https://raw.github.com/gist/5a847aca06e871a71b02)"
+
+echo "Setting up Git"
+git config --global user.name "Dean Rather"
+git config --global user.email "deanrather@gmail.com"
+git config --global color.ui true
+
+echo "Installing and setting up Tig"
+sudo apt-get install tig
+echo "color date              white   black" > ~/.tigrc
+echo "color graph-commit      red     black" >> ~/.tigrc
+
+echo "Setting up Vim"
+echo "set background=dark"      > ~/.vimrc
+echo "set tabstop=4"            >> ~/.vimrc
+echo "set autoindent"           >> ~/.vimrc
+echo "map <F5> :!php -l %<CR>"  >> ~/.vimrc
+
+#echo "Install elinks"
+#sudo apt-get install elinks
+
+echo "Retaining Bash History"
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
+echo "This is now Dean's Environment."
