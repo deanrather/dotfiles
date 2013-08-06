@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# bash -c "$(curl -fsSL https://raw.github.com/gist/5a847aca06e871a71b02)"
+# bash -c "$(curl -fsSL https://gist.github.com/deanrather/5719199/raw/965f4024ab19836e21167cbde6a86f2e97b2db3b/gistfile1.txt)"
 
 echo "Setting up Git"
 git config --global user.name "Dean Rather"
