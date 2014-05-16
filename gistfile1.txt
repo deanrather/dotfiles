@@ -5,7 +5,6 @@ echo "Setting up Git"
 git config --global user.name "Dean Rather"
 git config --global user.email "deanrather@gmail.com"
 git config --global color.ui true
-git config --global --add merge.ff false
 
 echo "Installing and setting up Tig"
 sudo apt-get install tig
