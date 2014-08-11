@@ -18,6 +18,11 @@ echo "set background=dark"      > ~/.vimrc
 echo "set tabstop=4"            >> ~/.vimrc
 #echo "set autoindent"           >> ~/.vimrc
 echo "map <F5> :!php -l %<CR>"  >> ~/.vimrc
+# vimdiff file1 file2
+# CTRL-W h        move to the window on the left
+# CTRL-W j        move to the window below
+# CTRL-W k        move to the window above
+# CTRL-W l        move to the window on the right
 
 #echo "Install elinks"
 #sudo apt-get install elinks
