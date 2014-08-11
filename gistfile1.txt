@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # bash <(curl -s https://gist.githubusercontent.com/deanrather/5719199/raw/gistfile1.txt)
+# TODO: put git stuff up top here as variables
 
 echo "Setting up Git"
 git config --global user.name "Dean Rather"
@@ -23,5 +24,13 @@ echo "map <F5> :!php -l %<CR>"  >> ~/.vimrc
 echo "Retaining Bash History"
 shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
+# TODO
+# http://askubuntu.com/questions/391082/how-to-see-time-stamps-in-bash-history
+# http://linux.die.net/man/1/bash
+
+# echo "setting up: \"google <keyword>\" support"
+# sudo apt-get install sr
+# alias google='sr google' # needs to go in .profile or .bash_aliases or something
 
 echo "This is now Dean's Environment."
