@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # bash <(curl -s https://gist.githubusercontent.com/deanrather/5719199/raw/gistfile1.txt)
-# TODO: put git stuff up top here as variables
+git_user_name="Dean Rather"
+git_user_email="deanrather@gmail.com"
 
 echo "Setting up Git"
-git config --global user.name "Dean Rather"
-git config --global user.email "deanrather@gmail.com"
+git config --global user.name $git_user_name
+git config --global user.email $git_user_email
 git config --global color.ui true
 
 echo "Installing and setting up Tig"
@@ -33,4 +34,4 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # sudo apt-get install sr
 # alias google='sr google' # needs to go in .profile or .bash_aliases or something
 
-echo "This is now Dean's Environment."
+echo "This is now $git_user_name's Work Environment."
