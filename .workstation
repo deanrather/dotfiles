@@ -1,15 +1,14 @@
 # Workstation Configurator
 # To execute script, run:
 # 
-#   wget -O ~.workstation https://dl.dropboxusercontent.com/u/1574931/.workstation.sh?raw && cat ~/.workstation | bash
+#   wget -O ~/.workstation http://git.io/y9HxGQ && cat ~/.workstation | bash
 # 
-# This script installs itself into the profile environment, providing various functionality.
-# It contains a "Configuration" block which is only executed when the wget line is used.
+# This will run the one-off setup, and install itself into the profile.
 
 
 ### CONFIGURATION ###
 
-# Git Configuration
+# Git configuration
 git_user_name=
 git_user_email=
 
@@ -40,16 +39,23 @@ slowdots()
   echo ""
 }
 
+# Generates a GitHub Tiny URL
+# Usage: github_tinyurl https://gist.github.com/deanrather/5572701
+github_tinyurl()
+{
+  local url=$1
+  curl -o- -i -s http://git.io -F "url=$url" | grep "Location" | awk '{print $2}'
+}
 
-### CONFIGURATION ###
+### SETUP ###
 
 # This will only be executed when run via the Wget command,
 # It is not executed when loaded as part of the profile
 if [ "$0" = "bash" ]
 then
   
-  echo "checking git details"
-  [ -z "$git_user_name" ] || ( echo -n "Git Name: "; read git_user_name )
+  echo "Checking git details"
+  [ -z "$git_user_name" ]  || ( echo -n "Git Name: ";  read git_user_name  )
   [ -z "$git_user_email" ] || ( echo -n "Git Email: "; read git_user_email )
 
   # echo "Installing Packages: $package_list" | slowdots
@@ -61,7 +67,7 @@ then
   git config --global user.email "$git_user_email"
   git config --global color.ui true
   git config --global push.default matching
-  
+
   echo "Configuring Tig"
   touch ~/.tigrc
   grep -q "color date"         ~/.tigrc || echo "color date         white black" >> ~/.tigrc
@@ -84,13 +90,20 @@ fi
 
 ### TODO ###
 
-# Create Keys
+# Autocompletions: `complete -F _ssh test.sh`  -- http://tldp.org/LDP/abs/html/tabexpansion.html
+# Help / Documentation - Reflection? -- http://stackoverflow.com/questions/2630812/get-a-list-of-function-names-in-a-shell-script
+# Grab stuff from dean.sh
+# Colourise the prompt
+# Push / Pull Script
+# Log
+# History PID
+# Generate Key
 
-# http://linux.die.net/man/1/bash
-# complete -F _ssh test2.sh
 
-# vimdiff file1 file2
-# CTRL-W h        move to the window on the left
-# CTRL-W j        move to the window below
-# CTRL-W k        move to the window above
-# CTRL-W l        move to the window on the right
+### NOTES ###
+
+# Bash Manual:        http://linux.die.net/man/1/bash
+# Sublime Setup:      https://gist.github.com/deanrather/2885590
+# Keyboard Shortcuts: https://gist.github.com/deanrather/2915320
+# Using Vim:          https://gist.github.com/deanrather/7310797
+# Using Git:          https://gist.github.com/deanrather/5572701
