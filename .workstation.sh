@@ -55,7 +55,7 @@
     # This saves a list of defined functions to the variable
     # It will be compared to a list we'll make futher down,
     # so we can know which functions were defined.
-    [ -z "$original_function_list" ] && original_function_list=$(compgen -A function)
+    [[ "$original_function_list" ]] || original_function_list=$(compgen -A function)
 
 ## MISC FUNCTIONS ##
 
@@ -173,7 +173,7 @@
     }
     
     # For generating help
-    [ -z "$functions_plus_misc" ] && functions_plus_misc=$(compgen -A function)
+    [[ "$functions_plus_misc" ]] || functions_plus_misc=$(compgen -A function)
 
 
 ## OTHER SCRIPTS ##
@@ -189,7 +189,7 @@
     fi
     
     # For generating help
-    [ -z "$functions_plus_misc_plus_other" ] && functions_plus_misc_plus_other=$(compgen -A function)
+    [[ "$functions_plus_misc_plus_other" ]] || functions_plus_misc_plus_other=$(compgen -A function)
 
 
 ## WORKSTATION FUNCTIONS ##
