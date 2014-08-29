@@ -140,8 +140,10 @@
         # fc -ln -1 | sed 's/^ *//' | xclip -selection clipboard     # copies to regular paste
     }
     
-    function find-function-definition()
+    function describe_function()
     {
+        function_name=$1
+        
         # Turn on extended shell debugging
         shopt -s extdebug
         # Get the line number defined on
@@ -150,14 +152,18 @@
         file=$(echo $(declare -F $1) | awk '{print $3}')
         # Turn off extended shell debugging
         shopt -u extdebug
-        echo "$file +$line"
-    }
-    
-    function describe_function()
-    {
-        function_name=$1
-        echo -en "\n\t$function_name"
-        echo -en "\n\t\t$(find-function-definition $function_name)\n"
+        
+        echo -en "\n\t$function_name\n"
+        
+        let "line-=1"
+        head -n "$line" "$file" | tac | while read line
+        do
+            [[ "$line" ]] || break
+            echo -en "\t\t$line\n"
+        done | tac
+        
+        let "line+=1"
+        echo -en "\n\t\t$file +${line}\n"
     }
 
     describe_functions()
