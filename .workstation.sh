@@ -55,7 +55,7 @@
     # This saves a list of defined functions to the variable
     # It will be compared to a list we'll make futher down,
     # so we can know which functions were defined.
-    functions_before=$(compgen -A function)
+    original_function_list=$(compgen -A function)
 
 ## MISC FUNCTIONS ##
 
@@ -229,12 +229,28 @@
     fi
 
 ## WORKSTATION FUNCTIONS ##
+            # cat ~/.workstation
+
+            echo "Original functions:" $original_function_list
+            
+            misc_function_list=$(comm -13 <(echo $original_function_list) <(echo $functions_plus_misc))
+            echo "Misc functions:" $misc_function_list
+
+            other_function_list=$(comm -13 <(echo $misc_function_list) <(echo $functions_plus_misc_plus_other))
+            echo "Other functions:" $other_function_list
 
     workstation()
     {
         if [ "$1" = "help" ]
         then
             cat ~/.workstation
+            
+            misc_function_list=$(comm -13 <(echo $original_function_list) <(echo $functions_plus_misc))
+            echo "Misc functions:" $misc_function_list
+
+            # echo $original_function_list
+            # echo $functions_plus_misc
+            # echo $functions_plus_misc_plus_other
         fi
         
         if [ "$1" = "setup" ]
