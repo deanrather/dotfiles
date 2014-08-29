@@ -1,3 +1,4 @@
+#!/bin/bash
 # Workstation Configurator
 
     # To execute script, run:
@@ -86,6 +87,16 @@
     }
 
 
+## OTHER SCRIPTS ##
+    
+    # Source any scripts in the ~/.workstation.sh directory
+    [ -d ~/.workstation.d ] || mkdir ~/.workstation.d
+    for file in ~/.workstation.d/*
+    do
+        source "$file";
+    done
+
+
 ## SETUP ##
 
     # This will only be executed when run via the Wget command,
@@ -130,6 +141,7 @@
 
     # Autocompletions: `complete -F _ssh test.sh`  -- http://tldp.org/LDP/abs/html/tabexpansion.html
     # Help / Documentation - Reflection? -- http://stackoverflow.com/questions/2630812/get-a-list-of-function-names-in-a-shell-script
+    # Grab stuff from dean.sh
     # Colourise the prompt
     # Push / Pull Script
     # Log
@@ -144,4 +156,3 @@
     # Keyboard Shortcuts: https://gist.github.com/deanrather/2915320
     # Using Vim:          https://gist.github.com/deanrather/7310797
     # Using Git:          https://gist.github.com/deanrather/5572701
-
