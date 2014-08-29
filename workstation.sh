@@ -130,7 +130,6 @@
 
     # Autocompletions: `complete -F _ssh test.sh`  -- http://tldp.org/LDP/abs/html/tabexpansion.html
     # Help / Documentation - Reflection? -- http://stackoverflow.com/questions/2630812/get-a-list-of-function-names-in-a-shell-script
-    # Grab stuff from dean.sh
     # Colourise the prompt
     # Push / Pull Script
     # Log
