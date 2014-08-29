@@ -55,7 +55,7 @@
     # This saves a list of defined functions to the variable
     # It will be compared to a list we'll make futher down,
     # so we can know which functions were defined.
-    original_function_list=$(compgen -A function)
+    [ -z "$original_function_list" ] && original_function_list=$(compgen -A function)
 
 ## MISC FUNCTIONS ##
 
@@ -173,7 +173,7 @@
     }
     
     # For generating help
-    functions_plus_misc=$(compgen -A function)
+    [ -z "$functions_plus_misc" ] && functions_plus_misc=$(compgen -A function)
 
 
 ## OTHER SCRIPTS ##
@@ -189,7 +189,7 @@
     fi
     
     # For generating help
-    functions_plus_misc_plus_other=$(compgen -A function)
+    [ -z "$functions_plus_misc_plus_other" ] && functions_plus_misc_plus_other=$(compgen -A function)
 
 
 ## WORKSTATION FUNCTIONS ##
@@ -200,10 +200,14 @@
         then
             cat ~/.workstation
             
-            local misc_function_list=$(comm -13 <(echo "$original_function_list") <(echo "$functions_plus_misc"))
+            local misc_function_list=$(comm -13  \
+                <(echo "$original_function_list") \
+                <(echo "$functions_plus_misc"))
             describe_functions "$misc_function_list" "Misc functions:"
 
-            local other_function_list=$(comm -13 <(echo "$misc_function_list") <(echo "$functions_plus_misc_plus_other"))
+            local other_function_list=$(comm -13 \
+                <(echo "$misc_function_list")     \
+                <(echo "$functions_plus_misc_plus_other"))
             describe_functions "$other_function_list" "Other functions:"
         fi
         
