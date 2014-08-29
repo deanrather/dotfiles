@@ -11,22 +11,75 @@
 ## CONFIGURATION ##
 
 ### Git configuration
-    git_user_name=
-    git_user_email=
+    # git_user_name=
+    # git_user_email=
 
 ### Packages to install
-    package_list="git tig vim tree"
+    # package_list="git tig vim tree"
 
 ### Configure history to automatically save
-    shopt -s histappend
-    PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+    # avoid duplicates
+    # export HISTCONTROL=ignoredups:erasedups  
+    # append history entries
+    # shopt -s histappend
+    # After each command, save and reload history
+    # export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+    # Causes pressing UP to show the previous command run in other terminal...
+
+    export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+    export HISTSIZE=100000                   # big big history
+    export HISTFILESIZE=100000               # big big history
+    shopt -s histappend                      # append to history, don't overwrite it
+
+    # Save and reload the history after each command finishes
+    export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 ### Configure history to save with timestamp
     HISTTIMEFORMAT="%Y-%m-%d %T "
 
+### Bash Prompt Colour
+    # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
+    export BLACK='\e[0;30m'
+    export RED='\e[0;31m'
+    export GREEN='\e[0;32m'
+    export YELLOW='\e[0;33m'
+    export BLUE='\e[0;34m'
+    export PURPLE='\e[0;35m'
+    export CYAN='\e[0;36m'
+    export WHITE='\e[0;37m'
+    export RESET='\e[0;00m'
+    # .bashrc colour options:
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    # .bashrc default:
+    # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
 ## FUNCTIONS ##
 
+### workstation_reload function
+    # reloads the .workstation file
+    # usage: workstation_reload
+    workstation_reload()
+    {
+        source ~/.workstation
+    }
+
+### log function
+    # writes logs to ~/.workstation.log/
+    # eg: echo "hello world" | log
+    # eg: echo "hello world" | log mylog.log
+    log()
+    {
+        read message
+        [ -d ~/.workstation.log ] || mkdir ~/.workstation.log
+        [ -z "$1" ] && log_basename='workstation.log' || log_basename="$1"
+        log_path=~/.workstation.log/"$log_basename"
+        touch "$log_path"
+        date=$(date +%F\T%T%z | sed 's/^.\{22\}/&:/')
+        pid=$$
+        echo -e "$date $pid $message" >> "$log_path"
+    }
+    
 ### slowdots function
     # Displays 3 dots over 3 seconds to give the user a chance to read
     # Usage: echo "get ready" | slowdots
@@ -41,7 +94,7 @@
         done
         echo ""
     }
-
+    
 ### github_tinyurl function
     # Generates a GitHub Tiny URL
     # Usage: github_tinyurl https://gist.github.com/deanrather/5572701
@@ -80,7 +133,7 @@
         echo -e "\n${BRed}Current date :$NC " ; date
         echo -e "\n${BRed}Machine stats :$NC " ; uptime
         echo -e "\n${BRed}Memory stats :$NC " ; free
-        echo -e "\n${BRed}Diskspace :$NC " ; mydf / $HOME
+        echo -e "\n${BRed}Diskspace :$NC " ; mydf / "$HOME"
         echo -e "\n${BRed}Local IP Address :$NC" ; my_ip
         echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
         echo
@@ -131,7 +184,7 @@
 
     #     echo "Configuring Profile"
     #     grep -q "~/.workstation" ~/.bashrc || echo -e "\n[ -f ~/.workstation ] && . ~/.workstation" >> ~/.bashrc
-    #     . ~/.workstation
+    #     . ~/.profile
         
     #     echo "Configured as $git_user_name with ~/.workstation"
     # fi
@@ -139,14 +192,15 @@
 
 ## TODO ##
 
-    # Autocompletions: `complete -F _ssh test.sh`  -- http://tldp.org/LDP/abs/html/tabexpansion.html
-    # Help / Documentation - Reflection? -- http://stackoverflow.com/questions/2630812/get-a-list-of-function-names-in-a-shell-script
-    # Grab stuff from dean.sh
-    # Colourise the prompt
+    # Autocompletions:
+    #   http://tldp.org/LDP/abs/html/tabexpansion.html
+    #   _ssh_hosts=$(grep "Host " ~/.ssh/config | awk '{print $2}')
+    #   complete -W "$_ssh_hosts" myfunction
+    # Help / Documentation - Reflection?
+    #   http://stackoverflow.com/questions/2630812/
     # Push / Pull Script
-    # Log
-    # History PID
     # Generate Key
+    # Fix Setup determining
 
 
 ## NOTES ##
@@ -156,3 +210,5 @@
     # Keyboard Shortcuts: https://gist.github.com/deanrather/2915320
     # Using Vim:          https://gist.github.com/deanrather/7310797
     # Using Git:          https://gist.github.com/deanrather/5572701
+    # Using VimDiff:      https://gist.github.com/mattratleph/4026987
+
