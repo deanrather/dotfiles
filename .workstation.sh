@@ -11,7 +11,7 @@
     # - Provides ~/.workstation.d directory for auto-loading your own scripts
     # 
     # This script has been designed to demonstrate lots of various bash functionality,
-    # and to include annotated examples, and references where appropriate.
+    # and to include annotated examples, and references.
     # 
     # For help, run:
     #   
@@ -96,9 +96,9 @@
     #   fi
     enter_to_cancel()
     {
-        # Display the message with the appended instructions 
+        # Display the message
         echo -n "Press [ENTER] to cancel"
-        # Give them some more time
+        # Give them some time to read
         for i in 1 2 3 4
         do
             # If it's not the first second, display a dot
@@ -106,7 +106,7 @@
             # Wait 1 second, if the user enters something return false
             read -t 1 && return 1
         done
-        # display a newline
+        # end the line
         echo ""
         # nothing was pressed, return true
         return 0
@@ -139,22 +139,6 @@
         fc -ln -1 | sed 's/^ *//' | xclip                            # copies to middle-click-paste
         # fc -ln -1 | sed 's/^ *//' | xclip -selection clipboard     # copies to regular paste
     }
-
-    # Get current host related info.
-    # http://www.tldp.org/LDP/abs/html/sample-bashrc.html
-    function ii()
-    {
-        echo -e "\nYou are logged on ${BRed}$HOST"
-        echo -e "\n${BRed}Additionnal information:$NC " ; uname -a
-        echo -e "\n${BRed}Users logged on:$NC " ; w -hs | cut -d " " -f1 | sort | uniq
-        echo -e "\n${BRed}Current date :$NC " ; date
-        echo -e "\n${BRed}Machine stats :$NC " ; uptime
-        echo -e "\n${BRed}Memory stats :$NC " ; free
-        echo -e "\n${BRed}Diskspace :$NC " ; mydf / "$HOME"
-        echo -e "\n${BRed}Local IP Address :$NC" ; my_ip
-        echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
-        echo
-    }
     
     function find-function-definition()
     {
@@ -169,33 +153,13 @@
         echo "$file +$line"
     }
     
-    function get_newer_items()
-    {
-        old_list=$1
-        new_list=$2
-        new_items=$(
-            diff -a             \
-            <(echo "$old_list")  \
-            <(echo "$new_list")   \
-            | grep ">"             \
-            | awk '{print $2}'
-        )
-        echo "$new_items"
-    }
-
-### Generating Help
-    # This saves a list of defined functions to the variable
-    # It will be compared to a list we'll make futher down,
-    # so we can know which functions were defined.
+    # For generating help
     functions_plus_misc=$(compgen -A function)
-
-    # echo "BEFORE: $functions_plus_misc"
-    # echo "NOW: $functions_now"
 
 
 ## OTHER SCRIPTS ##
     
-    # Source any scripts in the ~/.workstation.sh directory
+    # Source any scripts in the ~/.workstation.d directory
     [ -d ~/.workstation.d ] || mkdir ~/.workstation.d
     if [ "$(ls -A ~/.workstation.d)" ]
     then
@@ -205,9 +169,10 @@
         done
     fi
     
-    other_scripts=$(get_newer_items $original_function_list $(compgen -A function))
+    # For generating help
+    functions_plus_misc_plus_other=$(compgen -A function)
 
-echo $other_scripts
+
 ## SETUP ##
 
     # This is only executed when run with the wget command at the top of the script,
