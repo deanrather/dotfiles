@@ -2,7 +2,7 @@
 
     # To execute script, run:
     # 
-    #   wget -O ~/.workstation http://git.io/y9HxGQ && cat ~/.workstation | bash
+    #   wget -O ~/.workstation https://gist.githubusercontent.com/deanrather/5719199/raw && cat ~/.workstation | bash
     # 
     # This will run the one-off setup, and install itself into the profile.
 
