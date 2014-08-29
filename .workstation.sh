@@ -153,6 +153,25 @@
         echo "$file +$line"
     }
     
+    function describe_function()
+    {
+        function_name=$1
+        echo -en "\n\t$function_name"
+        echo -en "\n\t\t$(find-function-definition $function_name)\n"
+    }
+
+    describe_functions()
+    {
+        function_list=$1
+        function_list_name=$2
+        echo 
+        echo "$function_list_name"
+        echo "$function_list" | while read function_name
+        do
+            describe_function "$function_name"
+        done
+    }
+    
     # For generating help
     functions_plus_misc=$(compgen -A function)
 
@@ -172,6 +191,34 @@
     # For generating help
     functions_plus_misc_plus_other=$(compgen -A function)
 
+
+## WORKSTATION FUNCTIONS ##
+        
+    workstation()
+    {
+        if [ "$1" = "help" ]
+        then
+            cat ~/.workstation
+            
+            local misc_function_list=$(comm -13 <(echo "$original_function_list") <(echo "$functions_plus_misc"))
+            describe_functions "$misc_function_list" "Misc functions:"
+
+            local other_function_list=$(comm -13 <(echo "$misc_function_list") <(echo "$functions_plus_misc_plus_other"))
+            describe_functions "$other_function_list" "Other functions:"
+        fi
+        
+        if [ "$1" = "setup" ]
+        then
+            bash ~/.workstation setup
+        fi
+        
+        if [ "$1" = "reload" ]
+        then
+            echo "reloading ~/.workstation"
+            source ~/.workstation
+        fi
+    }
+    
 
 ## SETUP ##
 
@@ -227,43 +274,11 @@
         echo "$(git config --global user.name) configured"
         echo -e "see:\n\tworkstation help\n"
     fi
-
-## WORKSTATION FUNCTIONS ##
-            # cat ~/.workstation
-
-            echo "Original functions:" $original_function_list
-            
-            misc_function_list=$(comm -13 <(echo $original_function_list) <(echo $functions_plus_misc))
-            echo "Misc functions:" $misc_function_list
-
-            other_function_list=$(comm -13 <(echo $misc_function_list) <(echo $functions_plus_misc_plus_other))
-            echo "Other functions:" $other_function_list
-
-    workstation()
-    {
-        if [ "$1" = "help" ]
-        then
-            cat ~/.workstation
-            
-            misc_function_list=$(comm -13 <(echo $original_function_list) <(echo $functions_plus_misc))
-            echo "Misc functions:" $misc_function_list
-
-            # echo $original_function_list
-            # echo $functions_plus_misc
-            # echo $functions_plus_misc_plus_other
-        fi
-        
-        if [ "$1" = "setup" ]
-        then
-            bash ~/.workstation setup
-        fi
-        
-        if [ "$1" = "reload" ]
-        then
-            echo "reloading ~/.workstation"
-            source ~/.workstation
-        fi
-    }
+    
+    if [ "$1" = "help" ]
+    then
+        workstation help
+    fi
 
 
 ## TODO ##
