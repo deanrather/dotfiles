@@ -147,6 +147,12 @@
         # fc -ln -1 | sed 's/^ *//' | xclip -selection clipboard     # copies to regular paste
     }
     
+    # View active network connections
+    view_network()
+    {
+        lsof -i
+    }
+    
     # Displays the final text block from a file
     # Usage: display_final_block <file>
     # eg: display_final_block ~/.workstation
@@ -351,6 +357,8 @@
     # Login Info (git user)
     # Push / Pull Script
     # Generate Key
+    # http://www.commandlinefu.com/commands/browse/sort-by-votes/25
+    # read day month year <<< $(date +'%d %m %y')
 
 
 ## NOTES ##
