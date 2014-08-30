@@ -245,49 +245,11 @@
         less -qf <(echo "$help")
     }
     
-    # TODO make that other bit this bit
-    _workstation_setup()
-    {
-        bash ~/.workstation setup
-    }
-    
-    # Reloads bash
-    _workstation_reload()
-    {
-        echo "reloading ~/.workstation"
-        bash
-        # source ~/.workstation
-    }
-    
-    # Provides various helpful functions
-    workstation()
-    {
-        local member_function="$(printf "_%s_%s" "$FUNCNAME" "$1")"
-        if [ "$(type -t "$member_function")" = "function" ]
-        then
-            $member_function
-        else
-            echo "$member_function function not defined"
-            return 1
-        fi
-    }
-    
-    # Get list of workstation functions
-    [[ "$workstation_function_list" ]] ||
-        workstation_function_list=$(grep -Fxv -f     \
-            <(echo "$original_function_list $misc_function_list $other_function_list") \
-            <(compgen -A function))
-    
-
-## SETUP ##
-
-
     # This is only executed when run with the wget command at the top of the script,
     # or when passing in the "setup" argument.
     # It is not run when auto-loaded by your profile.
-    if [ "$1" = "setup" ]
-    then
-        
+    _workstation_setup()
+    {    
         # Install packages
         # Uses sed to find/replace spaces with space-comma.
         echo "Installing packages: $(echo $package_list | sed 's/ /, /g')"
@@ -334,9 +296,49 @@
         grep -q "~/.workstation" ~/.bashrc || echo -e "\n[ -f ~/.workstation ] && . ~/.workstation" >> ~/.bashrc
          
         echo "$(git config --global user.name) configured"
-        echo -e "see:\n\tworkstation help\n"
-    fi
+        echo -en "see:\n\tworkstation help\n"
+    }
     
+    # Reloads bash
+    _workstation_reload()
+    {
+        echo "reloading ~/.workstation"
+        bash
+        # source ~/.workstation
+    }
+    
+    # Provides various helpful functions
+    workstation()
+    {
+        # If no member function passed, show help
+        if [ -z "$1" ]
+        then
+            workstation help
+            return 0
+        fi
+                
+        local member_function="$(printf "_%s_%s" "$FUNCNAME" "$1")"
+        if [ "$(type -t "$member_function")" = "function" ]
+        then
+            $member_function
+        else
+            echo -en "$member_function function not defined\nsee:\n\rworkstation help\n"
+            return 1
+        fi
+    }
+    
+    # Enable running workstation functions by either:
+    #   - workstation <function name>
+    #   - _workstation_<function name>
+    #   - . ~/.workstation <function name>
+    [ -n "$1" ] && workstation $1
+    
+    # Get list of workstation functions
+    [[ "$workstation_function_list" ]] ||
+        workstation_function_list=$(grep -Fxv -f     \
+            <(echo "$original_function_list $misc_function_list $other_function_list") \
+            <(compgen -A function))
+
 
 ## TODO ##
 
