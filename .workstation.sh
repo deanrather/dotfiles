@@ -34,23 +34,7 @@
 
     # Configure history to save with timestamp
     export HISTTIMEFORMAT="%Y-%m-%d %T "
-
-    echo -e '\e[0;30m txtblk' # Black - Regular
-    echo -e '\e[0;31m txtred' # Red
-    echo -e '\e[0;32m txtgrn' # Green
-    echo -e '\e[0;33m txtylw' # Yellow
-    echo -e '\e[0;34m txtblu' # Blue
-    echo -e '\e[0;35m txtpur' # Purple
-    echo -e '\e[0;36m txtcyn' # Cyan
-    echo -e '\e[0;37m txtwht' # White
-    echo -e '\e[1;30m bldblk' # Black - Bold
-    echo -e '\e[1;32m bldgrn' # Green
-    echo -e '\e[1;33m bldylw' # Yellow
-    echo -e '\e[1;34m bldblu' # Blue
-    echo -e '\e[1;35m bldpur' # Purple
-    echo -e '\e[1;36m bldcyn' # Cyan
-    echo -e '\e[1;37m bldwht' # White
-
+    
     # Bash Prompt Colour
     # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
     set_prompt()
