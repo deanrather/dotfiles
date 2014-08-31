@@ -3,7 +3,7 @@
 
     # To setup this script, run:
     #
-    #   wget -O ~/.workstation git.io/workstation && . ~/.workstation update
+    #   wget -O ~/.workstation git.io/workstation && . ~/.workstation setup
     #
     # This achieves a few things:
     # - Installation & Setup of Programs (Interactive)
