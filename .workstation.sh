@@ -460,6 +460,7 @@
         then
             cd ~/.workstation.git
             git commit -am "updated with workstation push"
+            git push
         else
             echo "no local workstation repo, use 'workstation pull' first"
         fi
