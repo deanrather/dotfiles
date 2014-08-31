@@ -86,6 +86,36 @@
         echo "$date $pid $message" >> "$log_path"
     }
     
+    # Executes a command repeatedly
+    # usage: repeat <command> [<frequency in seconds>]
+    #   CTRL+c to quit
+    # eg: repeat date
+    # Note that this is similar to `watch`
+    # TODO: This function doesn't work! :(
+    repeat()
+    {
+        local command=$1           # command is first arg
+        local frequency=${2:-1}    # frequency is second arg or "1"
+
+        clear
+
+        trap ctrl_c INT            # catch ctrl+c keypress
+        function ctrl_c
+        {
+            clear
+            tput cnorm              # put the cursor back to normal
+            return
+        }
+
+        while [ true ]              # Repeat forever
+        do
+            tput civis              # hide the cursor
+            tput cup 0 0            # put cursor at top-left
+            $command                # execute the command
+            sleep $frequency        # wait for frequency
+        done
+    }
+        
     # Displays "Press [ENTER] to cancel..."
     # Returns:
     #   true after a 4 second timeout
@@ -114,6 +144,88 @@
         # nothing was pressed, return true
         return 0
     }
+    
+    # Get internet IP address
+    getip_public()
+    {
+        curl http://ipecho.net/plain
+        echo 
+    }
+    
+    # Get local IP address
+    # Usage: getip [<interface name>]
+    getip()
+    {
+        # interface provided as $1, defaults to "eth0"
+        local interface=${1:-eth0}
+        ifconfig "$interface" | grep -oP '(?<=inet addr:).*?(?= )'
+        # -o                    # output the match
+        # -P                    # use pearl regex
+        # (?<=PATTERN)          # begin selection after this pattern
+        # .*?                   # select everything until first match
+        # (?=PATTERN)           # end selection before this pattern
+    }
+    
+    # Sets a static IP address
+    # Backs up existing interfaces file
+    # Usage: setip <fourth IP tuplet> [<interface>]
+    # eg: setip 99
+    # eg: setip 50 wlan0
+    setip()
+    {
+        local path="/etc/network/interfaces"
+        # TODO: Error if no $1 is passed
+        
+        local interface=${2:-eth0}
+        # TODO:
+        #   - detect the list of interfaces
+        #   - if only 1; use that; otherwise throw error
+        #   ifconfig -s -a | awk '{print $1}'
+        
+        # Get the existing IP address parts
+        local p1 p2 p3 p4
+        read p1 p2 p3 p4 <<< $(getip "$interface" | tr "." "\n")
+        
+        # Set the fourth tuplet to that provided
+        p4=$1
+        
+        # Backup existing file
+        sudo cp "$path"{,.bak}
+        
+        # Write new file
+        sudo sh -c "echo 'auto lo'                        > $path"
+        sudo sh -c "echo 'iface lo inet loopback'        >> $path"
+        sudo sh -c "echo ''                              >> $path"
+        sudo sh -c "echo 'auto $interface'               >> $path"
+        sudo sh -c "echo 'iface $interface inet static'  >> $path"
+        sudo sh -c "echo '    address $p1.$p2.$p3.$p4'   >> $path"
+        sudo sh -c "echo '    network $p1.$p2.$p3.0'     >> $path"
+        sudo sh -c "echo '    netmask 255.255.255.0'     >> $path"
+        sudo sh -c "echo '    broadcast $p1.$p2.$p3.255' >> $path"
+        sudo sh -c "echo '    nameserver $p1.$p2.$p3.1'  >> $path"
+        sudo sh -c "echo '    gateway $p1.$p2.$p3.1'     >> $path"
+        echo "IP address $p1.$p2.$p3.$p4 written to $path"
+        
+        # Restart the network
+        # TODO: Only restart specific interface
+        echo "Restarting network"
+        if enter_to_cancel
+        then
+            sudo ifdown -a
+            sudo ifup -a
+        fi
+    }
+    
+    # Swaps 2 files
+    # Usage: swap <file 1> <file 2>
+    # eg: swap /path/to/file1 /path/to/file2
+    swap()
+    {
+        mv "$1" "/tmp/swapping-$1"
+        mv "$2" "$1"
+        mv "/tmp/swapping-$1" "$2"
+    }
+
     
     # Generates a GitHub Tiny URL
     # Usage: github_tinyurl <github url>
@@ -309,8 +421,8 @@
     _workstation_reload()
     {
         echo "reloading ~/.workstation"
-        bash
-        # source ~/.workstation
+        # bash
+        source ~/.workstation
     }
     
     # Provides various helpful functions
@@ -348,17 +460,16 @@
 
 ## TODO ##
 
+    # Fix reload function (doesn't get saved to history...)
+    # Fix the repeat function
+    # Fix the help function (shows some things multiple times)
     # Autocompletions:
     #   http://tldp.org/LDP/abs/html/tabexpansion.html
     #   _ssh_hosts=$(grep "Host " ~/.ssh/config | awk '{print $2}')
     #   complete -W "$_ssh_hosts" myfunction
-    # Help / Documentation - Reflection?
-    #   http://stackoverflow.com/questions/2630812/
     # Login Info (git user)
     # Push / Pull Script
     # Generate Key
-    # http://www.commandlinefu.com/commands/browse/sort-by-votes/25
-    # read day month year <<< $(date +'%d %m %y')
 
 
 ## NOTES ##
