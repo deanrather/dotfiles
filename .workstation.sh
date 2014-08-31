@@ -21,7 +21,7 @@
 ## CONFIGURATION ##
 
     # Packages to install
-    package_list="git tig vim tree xclip xdotool"
+    package_list="git ssh tig vim tree xclip xdotool fortune"
 
     # Configure History to automatically save
     export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
@@ -237,6 +237,14 @@
             sudo ifup -a
         fi
     }
+    
+    # Run a program in the background
+    # Usage: run_in_background
+    run_in_background()
+    {
+        $@ > /dev/null 2>&1 &
+        echo "Job running in background with pid: $!"
+    }
 
     # Shortens a GitHub URL
     # Usage: github_shortenurl <github url> [<code>]
@@ -369,9 +377,9 @@
     _workstation_help()
     {
         local help=''
+        help+="$(describe_functions "$workstation_function_list" "Workstation functions:")"
         help+="$(describe_functions "$misc_function_list" "Misc functions:")"
         help+="$(describe_functions "$other_function_list" "Other functions:")"
-        help+="$(describe_functions "$workstation_function_list" "Workstation functions:")"
         help+="$(display_final_block ~/.workstation "Notes:")"
         less -qf <(echo "$help")
     }
@@ -503,11 +511,14 @@
     workstation_function_names="$(echo $workstation_function_names | sed 's/ workstation//g')"
     complete -W "$workstation_function_names" workstation
 
-
+    # Ensure SSH agent is running
+    # eval $(ssh-agent) > /dev/null 2>&1 &
+    # ssh-add ~/.ssh/
+    
 ## TODO ##
 
+    # SSH Agent only when required..
     # Fix the repeat function
-    # Display Login Info (git user)
     # Generate Key
 
 
