@@ -525,7 +525,7 @@
     
     # Ensure SSH agent is running
     eval $(ssh-agent) > /dev/null 2>&1 &
-    ssh-add ~/.ssh/
+    ssh-add ~/.ssh/*
     
 ## TODO ##
 
