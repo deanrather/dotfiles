@@ -3,7 +3,7 @@
 
     # To setup this script, run:
     #
-    #   wget -O ~/.workstation https://gist.githubusercontent.com/deanrather/5719199/raw && . ~/.workstation update
+    #   wget -O ~/.workstation git.io/workstation && . ~/.workstation update
     #
     # This achieves a few things:
     # - Installation & Setup of Programs (Interactive)
@@ -238,12 +238,14 @@
         fi
     }
 
-    # Generates a GitHub Tiny URL
-    # Usage: github_tinyurl <github url>
-    github_tinyurl()
+    # Shortens a GitHub URL
+    # Usage: github_shortenurl <github url> [<code>]
+    github_shortenurl()
     {
-        local url=$1
-        curl -o- -i -s http://git.io -F "url=$url" | grep "Location" | awk '{print $2}'
+        local url="$(echo $1 | sed 's/githubusercontent/github/g')"
+        local code=$2
+        curl -o- -i -s http://git.io -F "url=$url" -F "code=$code" | grep "Location" | awk '{print $2}'
+        return $?
     }
 
     # Opens a google-chrome browser and googles for the query
