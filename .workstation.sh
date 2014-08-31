@@ -450,10 +450,10 @@
     _workstation_reload()
     {
         clear
-        unset other_function_list
-        unset original_function_list
-        unset misc_function_list
-        unset workstation_function_list
+        # unset other_function_list
+        # unset original_function_list
+        # unset misc_function_list
+        # unset workstation_function_list
         source ~/.workstation
     }
        
@@ -522,11 +522,10 @@
     workstation_function_names="$(echo $workstation_function_list | sed 's/_workstation_//g')"
     workstation_function_names="$(echo $workstation_function_names | sed 's/ workstation//g')"
     complete -W "$workstation_function_names" workstation
-    unset workstation_function_names
     
     # Ensure SSH agent is running
     # eval $(ssh-agent) > /dev/null 2>&1 &
-    # ssh-add ~/.ssh/
+    ssh-add ~/.ssh/
     
 ## TODO ##
 
