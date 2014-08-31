@@ -113,9 +113,9 @@
     #   CTRL+c to quit
     # eg: repeat date
     # Note that this is similar to `watch`
-    # TODO: This function doesn't work! :(
     repeat()
     {
+        echo "TODO. fix me"; return
         local command=$1           # command is first arg
         local frequency=${2:-1}    # frequency is second arg or "1"
 
@@ -319,6 +319,9 @@
         # Turn off extended shell debugging
         shopt -u extdebug
 
+        # tmp hax
+        function_name="$(echo $function_name | sed 's/_workstation_/workstation /g')"
+                
         echo -en "\n\t$function_name\n"
 
         let "line_number-=1"
@@ -326,20 +329,23 @@
         head -n "$line_number" "$file" | tac | while read line
         do
             [[ "$line" ]] || break
+            line="$(echo $line | sed 's/^# //')"
+            # echo $line
             echo -en "\t\t$line\n"
         done | tac
 
         let "line_number+=1"
-        echo -en "\n\t\t$file +${line_number}\n"
+        echo -en "\t\t  > $file +${line_number}\n"
     }
 
     # Describes a list of functions
     # Usage: describe_functions <function list> <list name>
     describe_functions()
     {
-        function_list=$1
-        function_list_name=$2
+        local function_list=$1
+        local function_list_name=$2
         echo -en "\n\n$function_list_name\n"
+        local function_name
         echo "$function_list" | while read function_name
         do
             describe_function "$function_name"
@@ -364,6 +370,7 @@
             source "$script"
         done
     fi
+    unset script
 
     # Get list of other functions defined
     [[ "$other_function_list" ]] ||
@@ -396,6 +403,7 @@
         then
             sudo apt-get update -y
             sudo apt-get install $package_list -y
+            unset package_list
         else
             echo "Package install cancelled"
         fi
@@ -442,8 +450,11 @@
     _workstation_reload()
     {
         clear
-        bash
-        # source ~/.workstation
+        unset other_function_list
+        unset original_function_list
+        unset misc_function_list
+        unset workstation_function_list
+        source ~/.workstation
     }
        
     # Updates workstation from github
@@ -454,6 +465,7 @@
             cd ~/.workstation.git
             git pull
         else
+            # TODO: dynamic url
             git clone git@gist.github.com:/5719199.git ~/.workstation.git
             mv ~/.workstation ~/.workstation.bak
             ln -s ~/.workstation.git/.workstation.sh ~/.workstation
@@ -510,7 +522,8 @@
     workstation_function_names="$(echo $workstation_function_list | sed 's/_workstation_//g')"
     workstation_function_names="$(echo $workstation_function_names | sed 's/ workstation//g')"
     complete -W "$workstation_function_names" workstation
-
+    unset workstation_function_names
+    
     # Ensure SSH agent is running
     # eval $(ssh-agent) > /dev/null 2>&1 &
     # ssh-add ~/.ssh/
