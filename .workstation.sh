@@ -433,9 +433,36 @@
     # Reloads bash
     _workstation_reload()
     {
-        echo "reloading ~/.workstation"
-        # bash
-        source ~/.workstation
+        clear
+        bash
+        # source ~/.workstation
+    }
+       
+    # Updates workstation from github
+    _workstation_pull()
+    {
+        if [ -d ~/.workstation.git ]
+        then
+            cd ~/.workstation.git
+            git pull
+        else
+            git clone git@gist.github.com:/5719199.git ~/.workstation.git
+            mv ~/.workstation ~/.workstation.bak
+            ln -s ~/.workstation.git/.workstation.sh ~/.workstation
+        fi
+        workstation reload
+    }
+    
+    # push workstation to github
+    _workstation_push()
+    {
+        if [ -d ~/.workstation.git ]
+        then
+            cd ~/.workstation.git
+            git commit -am "updated with workstation push"
+        else
+            echo "no local workstation repo, use 'workstation pull' first"
+        fi
     }
 
     # Provides various helpful functions
@@ -480,7 +507,6 @@
 
     # Fix the repeat function
     # Display Login Info (git user)
-    # Push / Pull Script
     # Generate Key
 
 
