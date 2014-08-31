@@ -202,7 +202,6 @@
         sudo sh -c "echo '    network $p1.$p2.$p3.0'     >> $path"
         sudo sh -c "echo '    netmask 255.255.255.0'     >> $path"
         sudo sh -c "echo '    broadcast $p1.$p2.$p3.255' >> $path"
-        sudo sh -c "echo '    nameserver $p1.$p2.$p3.1'  >> $path"
         sudo sh -c "echo '    gateway $p1.$p2.$p3.1'     >> $path"
         echo "IP address $p1.$p2.$p3.$p4 written to $path"
         
@@ -214,16 +213,6 @@
             sudo ifdown -a
             sudo ifup -a
         fi
-    }
-    
-    # Swaps 2 files
-    # Usage: swap <file 1> <file 2>
-    # eg: swap /path/to/file1 /path/to/file2
-    swap()
-    {
-        mv "$1" "/tmp/swapping-$1"
-        mv "$2" "$1"
-        mv "/tmp/swapping-$1" "$2"
     }
 
     
