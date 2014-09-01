@@ -466,6 +466,7 @@
             git pull
         else
             # TODO: dynamic url
+            # Check keys ok before mving!
             git clone git@gist.github.com:/5719199.git ~/.workstation.git
             mv ~/.workstation ~/.workstation.bak
             ln -s ~/.workstation.git/.workstation.sh ~/.workstation
