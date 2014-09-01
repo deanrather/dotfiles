@@ -21,7 +21,7 @@
 ## CONFIGURATION ##
 
     # Packages to install
-    package_list="git ssh tig vim tree xclip xdotool fortune"
+    package_list="git ssh tig vim tree xclip xdotool screen"
 
     # Configure History to automatically save
     export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
@@ -439,6 +439,10 @@
         grep -q "set tabstop"    ~/.vimrc || echo "set tabstop=4"            >> ~/.vimrc
         grep -q "map <F5>"       ~/.vimrc || echo "map <F5> :!php -l %<CR>"  >> ~/.vimrc
 
+        echo "Configuring Screen"
+        touch ~/.screenrc
+        grep -q "vbell"   ~/.screenrc || echo "vbell off"  >> ~/.screenrc
+
         echo "Configuring Profile"
         grep -q "~/.workstation" ~/.bashrc || echo -e "\n[ -f ~/.workstation ] && . ~/.workstation" >> ~/.bashrc
 
@@ -537,6 +541,7 @@
 ## NOTES ##
 
     # Bash Manual:        http://linux.die.net/man/1/bash
+    # Dev Setup:          https://gist.github.com/deanrather/4327301
     # Sublime Setup:      https://gist.github.com/deanrather/2885590
     # Keyboard Shortcuts: https://gist.github.com/deanrather/2915320
     # Using Vim:          https://gist.github.com/deanrather/7310797
