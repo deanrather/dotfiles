@@ -466,6 +466,7 @@
         then
             cd ~/.workstation.git
             git pull
+            cd -
         else
             # TODO: dynamic url
             # Check keys ok before mving!
@@ -484,6 +485,7 @@
             cd ~/.workstation.git
             git commit -am "updated with workstation push"
             git push
+            cd -
         else
             echo "no local workstation repo, use 'workstation pull' first"
         fi
