@@ -51,7 +51,8 @@
 
         # Tick or a cross depending on the previous exit code
         [[ $previous_exit_code == 0 ]] && PS1+="$green$tick" || PS1+="$red$cross"
-        PS1+="$white|"
+        # PS1+="$white|"
+        PS1+=" "
 
         # Host, or user@host depending on user
         [[ $EUID == 0 ]] && PS1+="$red\\h" || PS1+="$green\\u@\\h"
@@ -63,7 +64,8 @@
         # Green or red git branch, depending on dirty
         if [ -n "$git_branch" ]
         then
-            PS1+="$white|"
+            # PS1+="$white|"
+            PS1+=" "
             [[ -z $(git status --porcelain) ]] && PS1+="$green" || PS1+="$red"
             PS1+="$git_branch"
         fi
@@ -468,8 +470,10 @@
         then
             cd ~/.workstation.git
             git pull
+            cd -
         else
             # TODO: dynamic url
+            # Check keys ok before mving!
             git clone git@gist.github.com:/5719199.git ~/.workstation.git
             mv ~/.workstation ~/.workstation.bak
             ln -s ~/.workstation.git/.workstation.sh ~/.workstation
@@ -485,6 +489,7 @@
             cd ~/.workstation.git
             git commit -am "updated with workstation push"
             git push
+            cd -
         else
             echo "no local workstation repo, use 'workstation pull' first"
         fi
@@ -536,6 +541,8 @@
     # SSH Agent only when required..
     # Fix the repeat function
     # Generate Key
+    # http://ithaca.arpinum.org/2013/01/02/git-prompt.html
+    # Disk / RAM / CPU Alerts on login
 
 
 ## NOTES ##
