@@ -139,6 +139,29 @@
             sleep $frequency        # wait for frequency
         done
     }
+    
+    # Watches a directory (recursively) for changes
+    # If any files within the directory change, executes command
+    # Usage: execute_on_change <dir> <command>
+    # eg: execute_on_change /tmp "echo yep"
+    execute_on_change()
+    {
+        local path="$1"
+        local command="$2"
+        local current_hash=""
+        local new_hash=""
+        while [[ true ]]
+        do
+            new_hash="$(find "$path" -type f | md5sum)"
+            if [[ $old_hash != $new_hash ]]
+            then           
+                $command
+                old_hash=$new_hash
+            fi
+            sleep 2
+            echo "hash: $new_hash"
+        done
+    }
 
     # Displays "Press [ENTER] to cancel..."
     # Returns:
