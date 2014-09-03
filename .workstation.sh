@@ -264,7 +264,7 @@
     }
     
     # Run a program in the background
-    # Usage: run_in_background
+    # Usage: run_in_background <command>
     run_in_background()
     {
         $@ > /dev/null 2>&1 &
@@ -286,7 +286,8 @@
     # eg: google shell scripting
     google()
     {
-        google-chrome "https://www.google.com.au/search?q=$1&btnl=1"
+        local command="google-chrome https://www.google.com.au/search?q=$1&btnl=1"
+        run_in_background "$command"
     }
 
     # Copies the current terminal line
@@ -415,6 +416,11 @@
         help+="$(display_final_block ~/.workstation "Notes:")"
         less -qf <(echo "$help")
     }
+
+	_workstation_debug()
+	{
+		bash -e ~/.workstation
+	}
 
     # This is only executed when run with the wget command at the top of the script,
     # or when passing in the "setup" argument.
