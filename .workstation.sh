@@ -286,7 +286,7 @@
         then
             long_url="$(echo $1 | sed 's/githubusercontent/github/g')"
         else
-            echo "Usage: github_shortenurl <github url> [<code>]"
+            describe_function "$FUNCNAME"
             return 1
         fi
         
