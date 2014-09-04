@@ -275,10 +275,28 @@
     # Usage: github_shortenurl <github url> [<code>]
     github_shortenurl()
     {
-        local url="$(echo $1 | sed 's/githubusercontent/github/g')"
-        local code=$2
-        curl -o- -i -s http://git.io -F "url=$url" -F "code=$code" | grep "Location" | awk '{print $2}'
-        return $?
+        # TODO:
+        # - Warn if url looks like a commit instead of a head
+        # - Warn if no /raw part on the end
+        # - Output only the new URL if it worked
+        
+        local long_url short_url code orl_arg code_arg response
+        
+        if [ -n "$1" ]
+        then
+            long_url="$(echo $1 | sed 's/githubusercontent/github/g')"
+        else
+            echo "Usage: github_shortenurl <github url> [<code>]"
+            return 1
+        fi
+        
+        if [ -n "$2" ]
+        then
+            curl -o- -i -s http://git.io -F "url=$long_url" -F "code=$2"
+        else
+            curl -o- -i -s http://git.io -F "url=$long_url"
+        fi
+        echo 
     }
 
     # Opens a google-chrome browser and googles for the query
