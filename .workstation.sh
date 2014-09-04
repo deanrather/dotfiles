@@ -296,6 +296,7 @@
         else
             curl -o- -i -s http://git.io -F "url=$long_url"
         fi
+        
         echo 
     }
 
@@ -585,11 +586,12 @@
     
 ## TODO ##
 
-    # SSH Agent only when required..
-    # Fix the repeat function
     # Generate Key
+    # SSH Agent
+    # Fix the repeat function
     # http://ithaca.arpinum.org/2013/01/02/git-prompt.html
     # Disk / RAM / CPU Alerts on login
+    # Change all the helper functions to use gist and have the code separate
 
 
 ## NOTES ##
