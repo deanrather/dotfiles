@@ -331,6 +331,14 @@
         lsof -i
     }
 
+    # Displays a hash of a directory recursively
+    # Usage: hashdir <path/to/dir>
+    hashdir()
+    {
+        local dir="$1"
+        find "$dir" -type f -exec md5sum {} + | awk '{print $1}' | sort | md5sum
+    }
+    
     # Displays the final text block from a file
     # Usage: display_final_block <file>
     # eg: display_final_block ~/.workstation
