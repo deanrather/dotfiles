@@ -21,7 +21,7 @@
 ## CONFIGURATION ##
 
     # Packages to install
-    package_list="git ssh tig vim tree xclip xdotool screen"
+    package_list="git ssh tig vim tree xclip xdotool screen autossh"
 
     # Configure History to automatically save
     export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
@@ -600,6 +600,7 @@
     # http://ithaca.arpinum.org/2013/01/02/git-prompt.html
     # Disk / RAM / CPU Alerts on login
     # Change all the helper functions to use gist and have the code separate
+    # Separate Desktop vs Server programs
 
 
 ## NOTES ##
