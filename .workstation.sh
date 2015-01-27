@@ -309,14 +309,14 @@
         run_in_background "$command"
     }
 
-    # Copies the current terminal line
-    # Bound to ALT+C
-    copy_current_line()
-    {
-        local current_line="${READLINE_LINE:0:$READLINE_POINT}${CLIP}${READLINE_LINE:$READLINE_POINT}"
-        echo -n "$current_line" | xclip
-    }
-    bind -m emacs -x '"\ec": copy_current_line' || echo "unable to bind for copy-line"
+    # # Copies the current terminal line
+    # # Bound to ALT+C
+    # copy_current_line()
+    # {
+    #     local current_line="${READLINE_LINE:0:$READLINE_POINT}${CLIP}${READLINE_LINE:$READLINE_POINT}"
+    #     echo -n "$current_line" | xclip
+    # }
+    # bind -m emacs -x '"\ec": copy_current_line' || echo "unable to bind for copy-line"
 
     # Copies the last command executed
     copy_last_command()
