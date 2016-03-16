@@ -457,14 +457,10 @@
         # Install packages
         # Uses sed to find/replace spaces with space-comma.
         echo "Installing packages: $(echo $package_list | sed 's/ /, /g')"
-        if enter_to_cancel
-        then
-            sudo apt-get update -y
-            sudo apt-get install $package_list -y
-            unset package_list
-        else
-            echo "Package install cancelled"
-        fi
+        sudo apt-get update -y
+        sudo apt-get install $package_list -y
+        unset package_list
+
 
         if [ -z "$(git config --global user.name)" ]
         then
