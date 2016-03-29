@@ -34,6 +34,12 @@
 
     # Configure history to save with timestamp
     export HISTTIMEFORMAT="%Y-%m-%d %T "
+
+ 	# Set the terminal title
+ 	set_term_title()
+ 	{
+ 		echo -ne "\033]0;$1\007"
+ 	}
     
     # Bash Prompt Colour
     # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
