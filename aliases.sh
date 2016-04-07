@@ -27,7 +27,7 @@ alias ea="edit ~/.workstation.d/aliases.sh"
 alias eg="edit ~/.gitrc"
 alias et="edit ~/.tmux.conf"
 alias ev="edit ~/.vimrc"
-alias ew="edit ~/.workstation.sh"
+alias ew="edit ~/.workstation.git/.workstation.sh"
 
 # Other
 alias i="sudo apt-get install -y"
