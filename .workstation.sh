@@ -35,12 +35,6 @@
     # Configure history to save with timestamp
     export HISTTIMEFORMAT="%Y-%m-%d %T "
 
- 	# Set the terminal title
- 	set_term_title()
- 	{
- 		echo -ne "\033]0;$1\007"
- 	}
-    
     # Bash Prompt Colour
     # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
     set_prompt()
@@ -269,6 +263,14 @@
         fi
     }
     
+    # Creates a new branch
+    # Usage: git branch <branchname>
+    git_branch()
+    {
+        git checkout -b $1
+        git push -u origin/$1
+    }
+    
     # Run a program in the background
     # Usage: run_in_background <command>
     run_in_background()
@@ -306,6 +308,27 @@
         echo 
     }
 
+    # Set the terminal title
+    set_term_title()
+    {
+        echo -ne "\033]0;$1\007"
+    }
+    
+    # Clone from github
+    # Usage: github_clone username/repo
+    github_clone()
+    {
+        git clone git@github.com:/$1.git
+    }
+    
+    # Clone from bitbucket
+    # Usage: bitbucket_clone username/repo
+    bitbucket_clone()
+    {
+        git clone git@bitbucket.com:/$1.git
+    }
+    
+    
     # Opens a google-chrome browser and googles for the query
     # Usage: google <query>
     # eg: google shell scripting
