@@ -21,7 +21,7 @@
 ## CONFIGURATION ##
 
     # Packages to install
-    package_list="git ssh tig vim tree xclip xdotool screen autossh"
+    package_list="git ssh tig vim tree xclip xdotool screen autossh lsyncd curl wget tmux"
 
     # Configure History to automatically save
     export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
