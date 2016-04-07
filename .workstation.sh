@@ -275,8 +275,11 @@
     # Usage: git branch <branchname>
     git_branch()
     {
+        echo "git checkout -b $1"
         git checkout -b $1
-        git push -u origin/$1
+        
+        echo "git push -u origin $1"
+        git push -u origin $1
     }
     
     # Run a program in the background
