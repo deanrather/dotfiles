@@ -17,7 +17,10 @@ alias gs="git status"
 alias gd="git diff"
 alias gf="git fetch && git fetch --tags"
 alias gb="git_branch"
+alias ga="git add ."
+alias gc="git commit -am"
 
 # Other
 alias i="sudo apt-get install -y"
 alias locate="sudo updatedb; locate"
+alias ea="vim ~/.workstation.d/aliases.sh"
