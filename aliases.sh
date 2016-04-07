@@ -20,7 +20,15 @@ alias gb="git_branch"
 alias ga="git add ."
 alias gc="git commit -am"
 
+# Edit
+alias edit="vim"
+alias e="edit"
+alias ea="edit ~/.workstation.d/aliases.sh"
+alias eg="edit ~/.gitrc"
+alias et="edit ~/.tmux.conf"
+alias ev="edit ~/.vimrc"
+
 # Other
 alias i="sudo apt-get install -y"
 alias locate="sudo updatedb; locate"
-alias ea="vim ~/.workstation.d/aliases.sh"
+

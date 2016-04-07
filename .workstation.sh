@@ -109,6 +109,13 @@
         # Append message to log file
         echo "$date $pid $message" >> "$log_path"
     }
+    
+    # Backs up a file (creates a copy in the same dir with <name>.bak-<timestamp>)
+    # Usage: backup /path/to/file
+    backup()
+    {
+        cp "$1" "$1.bak-$(date --utc +%Y%m%d_%H%M%SZ)"
+    }
 
     # Executes a command repeatedly
     # usage: repeat <command> [<frequency in seconds>]
@@ -146,6 +153,7 @@
     # eg: execute_on_change /tmp "echo yep"
     execute_on_change()
     {
+        # see also: https://gist.github.com/senko/1154509
         local path="$1"
         local command="$2"
         local current_hash=""
