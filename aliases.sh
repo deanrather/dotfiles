@@ -13,7 +13,7 @@ alias vs="vagrant status"
 
 # Git
 alias g="git"
-alias gp="git push && git pull"
+alias gp="git pull --no-edit && git push"
 alias gs="git status"
 alias gd="git diff"
 alias gf="git fetch && git fetch --tags"
