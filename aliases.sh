@@ -35,4 +35,4 @@ alias ew="edit ~/.workstation.git/.workstation.sh"
 # Other
 alias i="sudo apt-get install -y"
 alias locate="sudo updatedb; locate"
-
+alias explorer="nautilus"
