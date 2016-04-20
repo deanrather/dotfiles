@@ -3,7 +3,7 @@
 # Workstation
 alias ds="dotfiles"
 alias dr="dotfiles reload"
-alias dp="dotfiles push && workstation pull"
+alias dp="dotfiles pull && dotfiles push"
 alias dv="dotfiles version"
 
 # Vagrant
