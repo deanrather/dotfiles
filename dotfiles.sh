@@ -51,6 +51,13 @@ _dotfiles_help()
     less -qf <(echo "$help")
 }
 
+_dotfiles_version()
+{
+    local git_dir
+    git_dir=~/dotfiles/.git
+    git --git-dir="$git_dir" log -1 --pretty="%ci (%cr) - %s"
+}
+
 _dotfiles_debug()
 {
 	bash -e ~/dotfiles/dotfiles.sh

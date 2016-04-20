@@ -4,6 +4,7 @@
 alias ds="dotfiles"
 alias dr="dotfiles reload"
 alias dp="dotfiles push && workstation pull"
+alias dv="dotfiles version"
 
 # Vagrant
 alias v="vagrant"
