@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Workstation
-alias ws="workstation"
-alias wr="workstation reload"
-alias wp="workstation push && workstation pull"
+alias ds="dotfiles"
+alias dr="dotfiles reload"
+alias dp="dotfiles push && workstation pull"
 
 # Vagrant
 alias v="vagrant"

@@ -28,11 +28,12 @@ log()
     echo "$date $pid $message" >> "$log_path"
 }
 
-# Backs up a file (creates a copy in the same dir with <name>.bak-<timestamp>)
+# Backs up a file (creates a copy in the same dir with <name>__<timestamp>.bak)
+# eg: /path/to/file.zip becomes /path/to/file.zip__2016-04-20_05-32-25.bak
 # Usage: backup /path/to/file
 backup()
 {
-    cp "$1" "$1.bak-$(date --utc +%Y%m%d_%H%M%SZ)"
+    cp "$1" "$1__$(date +%Y-%m-%d_%H-%M-%S).bak"
 }
 
 # If a file exists, backs it up and removes the original.
