@@ -2,7 +2,7 @@
 # functions.sh
 # misc functions to help with your workstation.
 
-# Writes a log to ~/.workstation.log/
+# Writes a log to ~/dotfile-logs/
 # Usage: echo <message> | log [<logfile name>]
 # eg: echo "hello world" | log
 # eg: echo "hello world" | log mylog.log
@@ -12,11 +12,11 @@ log()
     # Read message from STDIN
     read message
     # If dir does not exist, create it
-    [ -d ~/.workstation.log ] || mkdir ~/.workstation.log
+    [ -d ~/dotfile-logs ] || mkdir ~/dotfile-logs
     # Set provide default value for first argument
-    [ -z "$1" ] && log_basename='workstation.log' || log_basename="$1"
+    [ -z "$1" ] && log_basename='dotfiles.log' || log_basename="$1"
     # Concatenate dir with basename
-    local log_path=~/.workstation.log/"$log_basename"
+    local log_path=~/dotfile-logs/"$log_basename"
     # Create logfile if it doesn't exist
     touch "$log_path"
     # Get current time in ISO8601 format
@@ -35,6 +35,8 @@ backup()
     cp "$1" "$1.bak-$(date --utc +%Y%m%d_%H%M%SZ)"
 }
 
+# If a file exists, backs it up and removes the original.
+# Usage: backup /path/to/file
 backup_remove()
 {
     if [ -e "$1" ]
@@ -359,3 +361,59 @@ colour_percentage()
     elif [ "$1" -gt "80" ]; then echo -en "$r$1%$w"; 
     else                         echo -en "$y$1%$w"; fi
 }
+
+# Describes a function
+# Usage: describe_function <function name>
+# eg: describe_function display_final_block
+describe_function()
+{
+    local function_name=$1
+
+    # Turn on extended shell debugging
+    shopt -s extdebug
+    # Get the line number defined on
+    local line_number="$(echo $(declare -F $1) | awk '{print $2}')"
+    # Get the file defined in
+    local file="$(echo $(declare -F $1) | awk '{print $3}')"
+    # Turn off extended shell debugging
+    shopt -u extdebug
+
+    # tmp hax
+    function_name="$(echo $function_name | sed 's/dotfiles_/dotfiles /g')"
+            
+    echo -en "\n\t$function_name\n"
+
+    let "line_number-=1"
+    local line
+    head -n "$line_number" "$file" | tac | while read line
+    do
+        [[ "$line" ]] || break
+        line="$(echo $line | sed 's/^# //')"
+        # echo $line
+        echo -en "\t\t$line\n"
+    done | tac
+
+    let "line_number+=1"
+    echo -en "\t\t  > $file +${line_number}\n"
+}
+
+# Describes a list of functions
+# Usage: describe_functions <function list> <list name>
+describe_functions()
+{
+    local function_list=$1
+    local function_list_name=$2
+    echo -en "\n\n$function_list_name\n"
+    local function_name
+    echo "$function_list" | while read function_name
+    do
+        describe_function "$function_name"
+    done
+}
+
+# Get list of misc functions defined
+[[ "$misc_function_list" ]] ||
+    misc_function_list=$(grep -Fxv -f \
+        <(echo "$original_function_list") \
+        <(compgen -A function))
+

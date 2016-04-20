@@ -1,0 +1,141 @@
+#!/bin/bash
+# dotfiles.sh
+# Configures the terminal, prompt, etc.
+
+## CONFIGURATION ##
+
+# Configure History to automatically save
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# Configure history to save with timestamp
+export HISTTIMEFORMAT="%Y-%m-%d %T "
+
+# Generating Help
+# This saves a list of defined functions to the variable
+# It will be compared to a list we'll make futher down,
+# so we can know which functions were defined.
+[[ "$original_function_list" ]] || original_function_list=$(compgen -A function)
+
+
+# Source any scripts in the ~/dotfiles-autoload directory
+[ -d ~/dotfiles-autoload ] || mkdir ~/dotfiles-autoload
+if [ "$(ls -A ~/dotfiles-autoload)" ]
+then
+    for script in ~/dotfiles-autoload/*
+    do
+        source "$script"
+    done
+fi
+unset script
+
+# Get list of other functions defined
+[[ "$other_function_list" ]] ||
+    other_function_list=$(grep -Fxv -f \
+        <(echo -e "$original_function_list\n$misc_function_list") \
+        <(compgen -A function))
+
+
+# Displays list of functions defined by ~/dotfiles/dotfiles.sh
+_dotfiles_help()
+{
+    local help=''
+    help+="$(describe_functions "$dotfiles_function_list" "dotfiles functions:")"
+    help+="$(describe_functions "$misc_function_list" "Misc functions:")"
+    help+="$(describe_functions "$other_function_list" "Other functions:")"
+    less -qf <(echo "$help")
+}
+
+_dotfiles_debug()
+{
+	bash -e ~/dotfiles/dotfiles.sh
+}
+
+# Reloads bash
+_dotfiles_reload()
+{
+    # clear
+    # unset other_function_list
+    # unset original_function_list
+    # unset misc_function_list
+    # unset dotfiles_function_list
+    source ~/.profile
+}
+   
+# Updates dotfiles from github
+_dotfiles_pull()
+{
+    if [ -d ~/.dotfiles.git ]
+    then
+        cd ~/.dotfiles.git
+        git pull
+        cd -
+    else
+        # TODO: dynamic url
+        # Check keys ok before mving!
+        git clone git@gist.github.com:/5719199.git ~/.dotfiles.git
+        mv ~/.dotfiles ~/.dotfiles.bak
+        ln -s ~/.dotfiles.git/.dotfiles.sh ~/.dotfiles
+    fi
+    dotfiles reload
+}
+
+# push dotfiles to github
+_dotfiles_push()
+{
+    if [ -d ~/.dotfiles.git ]
+    then
+        cd ~/.dotfiles.git
+        git commit -am "updated with dotfiles push"
+        git push
+        cd -
+    else
+        echo "no local dotfiles repo, use 'dotfiles pull' first"
+    fi
+}
+
+# Provides various helpful functions
+dotfiles()
+{
+    # If no member function passed, show help
+    if [ -z "$1" ]
+    then
+        dotfiles help
+        return 0
+    fi
+
+    local member_function="$(printf "_%s_%s" "$FUNCNAME" "$1")"
+    if [ "$(type -t "$member_function")" = "function" ]
+    then
+        $member_function
+    else
+        echo -en "Undefined function: $member_function\nsee:\n\tdotfiles help\n\n"
+        return 1
+    fi
+}
+
+# Enable running dotfiles functions by either:
+#   - dotfiles <function name>
+#   - _dotfiles_<function name>
+#   - . ~/.dotfiles <function name>
+[ -n "$1" ] && dotfiles $1
+
+# Get list of dotfiles functions
+[[ "$dotfiles_function_list" ]] ||
+    dotfiles_function_list=$(grep -Fxv -f \
+        <(echo -e "$original_function_list\n$misc_function_list\n$other_function_list") \
+        <(compgen -A function))
+
+# Provide autocompletions
+dotfiles_function_names="$(echo $dotfiles_function_list | sed 's/_dotfiles_//g')"
+dotfiles_function_names="$(echo $dotfiles_function_names | sed 's/ dotfiles//g')"
+complete -W "$dotfiles_function_names" dotfiles
+
+# Ensure SSH agent is running
+# eval $(ssh-agent) > /dev/null 2>&1 &
+# ssh-add ~/.ssh/*
