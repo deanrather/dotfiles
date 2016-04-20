@@ -157,7 +157,8 @@ _workstation_setup()
     packages="$(cat ~/dotfiles/packages.txt)"
     if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
     then
-        echo "Installing $packages"
+        echo "Installing:"
+        echo "$packages"
         sudo apt-get update
         sudo apt-get install -y $packages
     fi
@@ -178,8 +179,8 @@ _workstation_setup()
         read git_user_email
         git config --global user.email "$git_user_email"
     fi
-    
     git config --global include.path ~/dotfiles/git.conf
+    
 
     # Symlink config files
     echo "Symlinking config files"

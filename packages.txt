@@ -1,5 +1,6 @@
 autossh
 curl
+figlet
 fortune-mod
 git
 lolcat
