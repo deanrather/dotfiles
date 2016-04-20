@@ -6,3 +6,4 @@
 - Change all the helper functions to use gist and have the code separate
 - Separate Desktop vs Server programs
 - other inline TODOs
+- https://github.com/bkuhlmann/dotfiles
