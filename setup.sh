@@ -53,3 +53,6 @@ grep -q "dotfiles.sh" ~/.bashrc || echo -e "\n[ -f ~/dotfiles/dotfiles.sh ] && .
 # Done!
 echo "$(git config --global user.name) configured"
 echo -en "see:\n\tdotfiles help\n\n"
+
+# Reload profile
+source ~/.profile

@@ -70,33 +70,20 @@ _dotfiles_reload()
 # Updates dotfiles from github
 _dotfiles_pull()
 {
-    if [ -d ~/.dotfiles.git ]
-    then
-        cd ~/.dotfiles.git
-        git pull
-        cd -
-    else
-        # TODO: dynamic url
-        # Check keys ok before mving!
-        git clone git@gist.github.com:/5719199.git ~/.dotfiles.git
-        mv ~/.dotfiles ~/.dotfiles.bak
-        ln -s ~/.dotfiles.git/.dotfiles.sh ~/.dotfiles
-    fi
+    cd ~/dotfiles
+    git pull
     dotfiles reload
+    cd -
 }
 
 # push dotfiles to github
 _dotfiles_push()
 {
-    if [ -d ~/.dotfiles.git ]
-    then
-        cd ~/.dotfiles.git
-        git commit -am "updated with dotfiles push"
-        git push
-        cd -
-    else
-        echo "no local dotfiles repo, use 'dotfiles pull' first"
-    fi
+    cd ~/dotfiles
+    git commit -am "updated with dotfiles push"
+    git push
+    git status
+    cd -
 }
 
 # Provides various helpful functions
