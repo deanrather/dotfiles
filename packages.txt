@@ -1,0 +1,13 @@
+git
+ssh
+tig
+vim
+tree
+xclip
+xdotool
+screen
+autossh
+lsyncd
+curl
+wget
+tmux
