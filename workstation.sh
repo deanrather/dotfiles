@@ -153,6 +153,7 @@ _workstation_debug()
 _workstation_setup()
 {
     # Install packages
+    local packages
     packages="$(cat ~/dotfiles/packages.txt)"
     if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
     then
@@ -193,6 +194,7 @@ _workstation_setup()
     [ -e ~/dotfiles-autoload/functions.sh ] || ln -s ~/dotfiles/functions.sh ~/dotfiles-autoload/functions.sh
     [ -e ~/dotfiles-autoload/aliases.sh ]   || ln -s ~/dotfiles/aliases.sh   ~/dotfiles-autoload/aliases.sh
     [ -e ~/dotfiles-autoload/prompt.sh ]   || ln -s ~/dotfiles/prompt.sh   ~/dotfiles-autoload/prompt.sh
+    [ -e ~/dotfiles-autoload/banner.sh ]   || ln -s ~/dotfiles/banner.sh   ~/dotfiles-autoload/banner.sh
 
     # Setup workstation to autoload
     echo "Configuring Profile"
@@ -206,12 +208,12 @@ _workstation_setup()
 # Reloads bash
 _workstation_reload()
 {
-    clear
+    # clear
     # unset other_function_list
     # unset original_function_list
     # unset misc_function_list
     # unset workstation_function_list
-    source ~/.workstation
+    source ~/.profile
 }
    
 # Updates workstation from github
