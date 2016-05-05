@@ -11,6 +11,7 @@ alias v="vagrant"
 alias vup="vagrant up"
 alias vssh="vagrant ssh"
 alias vs="vagrant status"
+alias vr="vagrant reload"
 
 # Git
 alias g="git"
@@ -27,11 +28,11 @@ alias gsu="git submodule update --init --recursive"
 # Edit
 alias edit="vim"
 alias e="edit"
-alias ea="edit ~/.workstation.d/aliases.sh && wr"
+alias ea="edit ~/dotfiles-autoload/aliases.sh && wr"
 alias eg="edit ~/.gitrc"
 alias et="edit ~/.tmux.conf"
 alias ev="edit ~/.vimrc"
-alias ew="edit ~/.workstation.git/.workstation.sh"
+alias ed="edit ~/dotfiles/dotfiles.sh"
 
 # Other
 alias i="sudo apt-get install -y"
