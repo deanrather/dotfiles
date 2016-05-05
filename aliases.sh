@@ -28,7 +28,7 @@ alias gsu="git submodule update --init --recursive"
 # Edit
 alias edit="vim"
 alias e="edit"
-alias ea="edit ~/dotfiles-autoload/aliases.sh && wr"
+alias ea="edit ~/dotfiles-autoload/aliases.sh && dr"
 alias eg="edit ~/.gitrc"
 alias et="edit ~/.tmux.conf"
 alias ev="edit ~/.vimrc"
