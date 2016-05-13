@@ -39,9 +39,11 @@ echo ""
 unset cpu_use_total cpu_core_count cpu_use_total disk_usage mem_usage mem_available hdd_available cpu_speed cpu_description uptime
 
 name=$(git config --global user.name)
+onSince=$(last -R $USER | grep -Eo "$(date +'%a %b %d') [0-9]+:[0-9]+" | tail -n 1 | grep -Eo "[0-9]+:[0-9]+")
+
 
 # Show Welcome Message
-echo "      $(date)"
+echo "      $(date) (since $onSince)"
 echo "      Welcome, $name"
 fortune | fold -w 70 -s | sed  's/^/      /'
 echo ""
