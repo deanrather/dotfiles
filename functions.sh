@@ -480,7 +480,16 @@ add_remote_user()
 # http://askubuntu.com/a/516898/55141
 set_hostname()
 {
-    sudo hostnamectl set-hostname $1
+    sudo hostnamectl set-hostname "$1"
+}
+
+# Allows a user root access without password
+# Usage: grant_user_superpowers <username>
+# eg: grant_user_superpowers dean
+grant_user_superpowers()
+{
+    user="$1"
+    echo "$user ALL=(ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$user-sudo-nopasswd"
 }
 
 # Get list of misc functions defined
