@@ -412,6 +412,77 @@ describe_functions()
     done
 }
 
+
+
+# Adds a keypair if one does not exist.
+# Echo's out the public key in the format expected by add_remote_user (username, fullname, pubkey)
+#
+# Usage: 
+#
+#    request_remote_user
+#    
+request_remote_user()
+{
+    USERNAME="$USER"
+    FULLNAME="$(getent passwd | grep $USER | cut -d':' -f5 | cut -d',' -f1)"
+
+    if [ ! -e ~/.ssh/id_rsa.pub ]
+    then
+        sudo apt-get install -y ssh-keygen
+        ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -P '' -q
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_rsa
+    fi
+
+    PUBKEY="$(cat ~/.ssh/id_rsa.pub)"
+
+    echo "add_remote_user \"$USERNAME\" \"$FULLNAME\" \"$PUBKEY\"";
+}
+
+
+# Adds a new user to the system, allowing access by the provided public key.
+#
+# Usage: 
+#
+#    add_remote_user "<username>" "<Full Name>" "<Public Key>"
+#
+# eg:
+#
+#    add_remote_user "dean" "Dean Rather" "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChab0m+uBRifnBEn8DGFc0rUWDtuMB93Z5lM9yKxO0SHN0e4Fhozv83LRxGThoWDl6jEFjaW2RqqbtSgCJQBnJrQDdKxeLgkLOz6FEWnQsvRsT71ngLSXUEKWhIfJS1D+Cur6q7CmiaZf86Yh3T2bsaqS2x0aWtWTd6ybLpqFATdEQrzJH1SYOGNe3uRx/hR9d3D3v20Azm2bhaQ4EteSdf11dGcRdmE4oQNPZXHLPtpZQMVpKbpNuuUMwddh/TPnnRq7WSU7ZAKDHPxPvlQRvqlq6xU0L8vl2pGvJhnJHg9ZZWZRcAMnLwu+Zh0vMtpOFnT4SUXlyWqqwjA1c9c9x dean@dean-XPS-8700"
+#
+add_remote_user()
+{
+    USERNAME="$1"
+    FULLNAME="$2"
+    PUBKEY="$3"
+
+    sudo adduser --disabled-password "$USERNAME" --gecos="$FULLNAME"
+    sudo mkdir "/home/$USERNAME/.ssh"
+    sudo chown "$USERNAME:$USERNAME" "/home/$USERNAME/.ssh/"
+    echo -n "Adding public key "
+    echo "$PUBKEY" | sudo tee "/home/$USERNAME/.ssh/authorized_keys"
+    sudo chown "$USERNAME:$USERNAME" "/home/$USERNAME/.ssh/authorized_keys"
+
+    IPS="$(ifconfig | grep -Po 'inet addr:.+? ' | grep -v '127.0.0.1' | cut -d":" -f2)"
+    echo "$FULLNAME can now access your machine as the user $USERNAME via of the following IPs:"
+    echo "$IPS"
+
+    # TODO:
+    # - Add validation for inputs
+    # - Add error handling
+    # - check sudo perms
+}
+
+
+
+# Sets the machine hostname
+# Doesn't require reboot!
+# http://askubuntu.com/a/516898/55141
+set_hostname()
+{
+    sudo hostnamectl set-hostname $1
+}
+
 # Get list of misc functions defined
 [[ "$misc_function_list" ]] ||
     misc_function_list=$(grep -Fxv -f \
