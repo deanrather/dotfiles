@@ -3,6 +3,7 @@ curl
 figlet
 fortune-mod
 git
+htop
 lolcat
 lsyncd
 screen

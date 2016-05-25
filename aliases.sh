@@ -15,7 +15,7 @@ alias vr="vagrant reload"
 
 # Git
 alias g="git"
-alias gp="git pull --no-edit && git push"
+alias gp="git pull --no-edit --all --tags && git push && git push --tags"
 alias gs="git status"
 alias gd="git diff"
 alias gf="git fetch --all --tags"
@@ -24,6 +24,7 @@ alias ga="git add "
 alias gc="git commit"
 alias ta="tig --all"
 alias gsu="git submodule update --init --recursive"
+alias gm="git merge -Xignore-space-change"
 
 # Edit
 alias edit="vim"
