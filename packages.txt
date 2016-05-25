@@ -6,6 +6,7 @@ git
 htop
 lolcat
 lsyncd
+ncdu
 screen
 ssh
 tig
