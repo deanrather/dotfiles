@@ -25,6 +25,7 @@ alias gc="git commit"
 alias ta="tig --all"
 alias gsu="git submodule update --init --recursive"
 alias gm="git merge -Xignore-space-change"
+alias git_no_merged="git branch -a --no-merged"
 
 # Edit
 alias edit="vim"

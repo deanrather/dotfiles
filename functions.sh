@@ -2,6 +2,7 @@
 # functions.sh
 # misc functions to help with your workstation.
 
+
 # Writes a log to ~/dotfile-logs/
 # Usage: echo <message> | log [<logfile name>]
 # eg: echo "hello world" | log
@@ -28,6 +29,7 @@ log()
     echo "$date $pid $message" >> "$log_path"
 }
 
+
 # Backs up a file (creates a copy in the same dir with <name>__<timestamp>.bak)
 # eg: /path/to/file.zip becomes /path/to/file.zip__2016-04-20_05-32-25.bak
 # Usage: backup /path/to/file
@@ -46,6 +48,38 @@ backup_remove()
         rm "$1"
     fi
 }
+
+
+# usage: on_hotkey <command>
+# eg: on_hotkey echo hello
+# eg: on_hotkey ./test.sh
+# For hotkey setup see: Ubuntu Desktop Setup.md
+# For implementation see: dotfiles.sh:_dotfiles_hotkey
+on_hotkey()
+{
+    # hotkey_file is written each time the hotkey is pressed
+    hotkey_file=/tmp/dotfiles-hotkey.log
+
+    # this script runs until closed with ctrl+c
+    while true
+    do
+        
+        # clear any existing hotkey file
+        rm -f $hotkey_file
+        
+        # wait until a hotkey file exists
+        while [ ! -e $hotkey_file ]
+        do
+            echo 'nothing' > /dev/null;
+        done;
+        
+        # run your command
+        eval "$@"
+    done
+
+}
+
+
 
 # Executes a command repeatedly
 # usage: repeat <command> [<frequency in seconds>]
@@ -77,6 +111,7 @@ repeat()
     done
 }
 
+
 # Watches a directory (recursively) for changes
 # If any files within the directory change, executes command
 # Usage: execute_on_change <dir> <command>
@@ -100,6 +135,7 @@ execute_on_change()
         echo "hash: $new_hash"
     done
 }
+
 
 # Displays "Press [ENTER] to cancel..."
 # Returns:
@@ -129,6 +165,7 @@ enter_to_cancel()
     # nothing was pressed, return true
     return 0
 }
+
 
 # Get internet IP address
 getip_public()
@@ -201,8 +238,9 @@ setip()
     fi
 }
 
+
 # Creates a new branch
-# Usage: git branch <branchname>
+# Usage: git_branch <branchname>
 git_branch()
 {
     echo "git checkout -b $1"
@@ -211,6 +249,53 @@ git_branch()
     echo "git push -u origin $1"
     git push -u origin $1
 }
+
+# Rename a remote git branch
+# Usage: git_rename_remote_branch <oldbranch> <newbranch>
+git_rename_remote_branch()
+{
+    # Thanks https://github.com/sschuberth/dev-scripts/blob/master/git/git-rename-remote-branch.sh
+    if [ $# -ne 3 ]; then
+        echo "Rationale : Rename a branch on the server without checking it out."
+        echo "Usage     : git_rename_remote_branch <remote> <old name> <new name>"
+        echo "Example   : git_rename_remote_branch origin master release"
+        exit 1
+    fi
+
+    echo "Renaming $1 $2 -> $3..."
+    git push "$1" "$1/$2:refs/heads/$3" ":$2"
+}
+
+# Return true/false whether a repo is clean
+# Usage: git_repo_is_clean </path/to/repo>
+git_repo_is_clean()
+{
+    repo="$1"
+    
+    cd "$repo"
+    if [[ -n $(git status --porcelain) ]]
+    then
+        echo "repo is dirty";
+        return 1
+    fi
+}
+
+# Delete a remote git branch
+# Usage: git_delete_remote_branch <branchname>
+git_delete_remote_branch()
+{
+    branchname="$1"
+    git push origin --delete "$branchname"
+}
+
+# Shows the diff of changes to be merged in
+# Usage: git_preview_merge <branchname>
+git_preview_merge()
+{
+    branchname=1
+    git diff "...origin/$branchname"
+}
+
 
 # Run a program in the background
 # Usage: run_in_background <command>
@@ -481,6 +566,7 @@ add_remote_user()
 set_hostname()
 {
     sudo hostnamectl set-hostname "$1"
+    echo "127.0.0.1    $1" | sudo tee -a /etc/hosts
 }
 
 # Allows a user root access without password

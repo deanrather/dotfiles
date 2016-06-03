@@ -93,6 +93,11 @@ _dotfiles_push()
     cd -
 }
 
+_dotfiles_hotkey()
+{
+    echo 'hotkey pressed' >> /tmp/dotfiles-hotkey.log
+}
+
 # Provides various helpful functions
 dotfiles()
 {
