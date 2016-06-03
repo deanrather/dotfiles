@@ -24,10 +24,12 @@
 For Build Scripts, or whatever.
 
 - System Settings -> Keyboard -> Shortcuts -> Custom Shortcuts -> [+]
-- Name: `hotkey.sh`
-- Command: `/home/NAME/dotfiles/hotkey.sh`
+- Name: `on_hotkey`
+- Command: `/home/NAME/dotfiles/dotfiles.sh hotkey`
 - Highlight the line, and press the `Disabled` dialogue
 - Press the Key Combination (I use the `Pause` key)
+
+To use: run `on_hotkey <your command>` on the CLI.
 
 ### Uninstall Bloatware
 
@@ -38,9 +40,11 @@ For Build Scripts, or whatever.
 
 	- Install `Unity Tweak Tool`
 
-		Overview -> Switchboard -> [untick] `Display "Schow Desktop" icon`
+		Overview -> Switcher -> [untick] `Display "Schow Desktop" icon`
 
 ## Make Terminals look Nicer
+
+TODO: Doesn't work any more :(
 
 `nano ~/.config/gtk-3.0/gtk.css`:
 
