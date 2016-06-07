@@ -70,7 +70,7 @@ on_hotkey()
         # wait until a hotkey file exists
         while [ ! -e $hotkey_file ]
         do
-            echo 'nothing' > /dev/null;
+            sleep 0.1
         done;
         
         # run your command
