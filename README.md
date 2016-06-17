@@ -4,7 +4,9 @@ TODO: Info about these dotfiles.
 
 ## Setup
 
-Just clone this repo into `~/dotfiles` and run:
+(optional) Fork this repo into your own account using the `Fork` button.
+
+Clone the repo into `~/dotfiles` and run:
 
 	~/dotfiles/setup.sh
 
