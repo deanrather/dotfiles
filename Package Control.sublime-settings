@@ -1,0 +1,22 @@
+{
+	"bootstrapped": true,
+	"installed_packages":
+	[
+		"Alignment",
+		"All Autocomplete",
+		"Case Conversion",
+		"DocBlockr",
+		"Function Name Display",
+		"GitGutter",
+		"Google Search",
+		"Insert Nums",
+		"LineEndings",
+		"SideBarEnhancements",
+		"SublimeLinter",
+		"SublimeLinter-jshint",
+		"SublimeLinter-php",
+		"SublimeLinter-shellcheck",
+		"Theme - itg.flat",
+		"nginx"
+	]
+}

@@ -14,6 +14,7 @@ then
     sudo apt-get install -y $packages
 fi
 
+
 # Configure Git
 if [ -z "$(git config --global user.name)" ]
 then
@@ -34,9 +35,12 @@ git config --global include.path ~/dotfiles/git.conf
 # Symlink config files
 echo "Symlinking config files"
 source ~/dotfiles/functions.sh
-backup_remove ~/.tigrc      && ln -s ~/dotfiles/tig.conf  ~/.tigrc
-backup_remove ~/.vimrc      && ln -s ~/dotfiles/vim.conf  ~/.vimrc
-backup_remove ~/.tmux.conf  && ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+backup_symlink ~/dotfiles/tig.conf                          ~/.tigrc
+backup_symlink ~/dotfiles/vim.conf                          ~/.vimrc
+backup_symlink ~/dotfiles/tmux.conf                         ~/.tmux.conf
+backup_symlink ~/dotfiles/Package\ Control.sublime-settings ~/.config/sublime-text-3/Packages/User/Package\ Control.sublime-settings
+backup_symlink ~/dotfiles/Preferences.sublime-settings      ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+
 
 # Setup & symlink autoloads
 echo "Making ~/.dotfiles-autolod dir, symlinking aliases and functions"
@@ -46,13 +50,16 @@ echo "Making ~/.dotfiles-autolod dir, symlinking aliases and functions"
 [ -e ~/dotfiles-autoload/prompt.sh ]   || ln -s ~/dotfiles/prompt.sh   ~/dotfiles-autoload/prompt.sh
 [ -e ~/dotfiles-autoload/banner.sh ]   || ln -s ~/dotfiles/banner.sh   ~/dotfiles-autoload/banner.sh
 
+
 # Setup dotfiles to autoload
 echo "Configuring Profile"
 grep -q "dotfiles.sh" ~/.bashrc || echo -e "\n[ -f ~/dotfiles/dotfiles.sh ] && . ~/dotfiles/dotfiles.sh" >> ~/.bashrc
 
+
 # Done!
 echo "$(git config --global user.name) configured"
 echo -en "see:\n\tdotfiles help\n\n"
+
 
 # Reload profile
 source ~/.profile

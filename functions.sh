@@ -49,6 +49,14 @@ backup_remove()
     fi
 }
 
+# Symlink, but backup existing files first.
+# Usage: backup_symlink /path/from/file /path/to/file
+backup_symlink()
+{
+    backup_remove "$2"
+    ln -s "$1" "$2"
+}
+
 
 # usage: on_hotkey <command>
 # eg: on_hotkey echo hello
@@ -509,6 +517,7 @@ describe_functions()
 request_remote_user()
 {
     USERNAME="$USER"
+    # todo: grep -e "^${USER}:" (because what if your usename is "d")
     FULLNAME="$(getent passwd | grep $USER | cut -d':' -f5 | cut -d',' -f1)"
 
     if [ ! -e ~/.ssh/id_rsa.pub ]

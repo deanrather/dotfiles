@@ -1,0 +1,20 @@
+{
+	"auto_match_enabled": false,
+	"default_line_ending": "unix",
+	"dictionary": "Packages/Language - English/en_GB.dic",
+	"font_size": 11,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"itg_sidebar_tree_medium": true,
+	"itg_xsmall_tabs": true,
+	"laxbreak": true,
+	"mid_line_tabs": true,
+	"shift_tab_unindent": true,
+	"smarttabs": true,
+	"tab_completion": false,
+	"trailing": true,
+	"trim_automatic_white_space": false
+}
