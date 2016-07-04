@@ -21,10 +21,10 @@ git clone "https://github.com/$GITHUB_REPO.git" ~/dotfiles &&
 
 ## See Also
 
+- [Ubuntu Desktop Setup](Ubuntu Desktop Setup.md)
+- [Sublime Setup](https://gist.github.com/deanrather/2885590)
 - [Dotfiles](http://github.com/dotfiles)
 - [Bash Manual](http://linux.die.net/man/1/bash)
-- [Dev Setup](https://gist.github.com/deanrather/4327301)
-- [Sublime Setup](https://gist.github.com/deanrather/2885590)
 - [Keyboard Shortcuts](https://gist.github.com/deanrather/2915320)
 - [Using Vim](https://gist.github.com/deanrather/7310797)
 - [Using Git](https://gist.github.com/deanrather/5572701)
