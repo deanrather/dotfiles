@@ -60,7 +60,7 @@ For Build Scripts, or whatever.
 
 - System Settings -> Keyboard -> Shortcuts -> Custom Shortcuts -> [+]
 - Name: `on_hotkey`
-- Command: `/home/NAME/dotfiles/dotfiles.sh hotkey`
+- Command: `dotfiles/dotfiles.sh hotkey`
 - Highlight the line, and press the `Disabled` dialogue
 - Press the Key Combination (I use the `Pause` key)
 
