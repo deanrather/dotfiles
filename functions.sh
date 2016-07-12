@@ -362,6 +362,13 @@ bitbucket_clone()
     git clone git@bitbucket.com:/$1.git
 }
 
+# Clone from gitlab
+# Usage: gitlab_clone username/repo
+gitlab_clone()
+{
+    git clone git@gitlab.com:/$1.git
+}
+
 
 # Opens a google-chrome browser and googles for the query
 # Usage: google <query>
