@@ -1,20 +1,28 @@
 {
-	"auto_match_enabled": false,
-	"default_line_ending": "unix",
-	"dictionary": "Packages/Language - English/en_GB.dic",
-	"font_size": 11,
-	"highlight_line": true,
-	"ignored_packages":
-	[
-		"Vintage"
-	],
-	"itg_sidebar_tree_medium": true,
-	"itg_xsmall_tabs": true,
-	"laxbreak": true,
-	"mid_line_tabs": true,
-	"shift_tab_unindent": true,
-	"smarttabs": true,
-	"tab_completion": false,
-	"trailing": true,
-	"trim_automatic_white_space": false
+    "auto_close_tags": false,
+    "auto_match_enabled": false,
+    "color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
+    "default_line_ending": "unix",
+    "detect_indentation": false,
+    "folder_exclude_patterns":
+    [
+        ".svn",
+        ".git",
+        ".hg",
+        "CVS",
+        ".npm",
+        "node_modules",
+        ".cache"
+    ],
+    "highlight_line": true,
+    "itg_sidebar_tree_medium": true,
+    "itg_xsmall_tabs": true,
+    "laxbreak": true,
+    "mid_line_tabs": true,
+    "shift_tab_unindent": true,
+    "show_line_endings": true,
+    "smarttabs": true,
+    "tab_completion": false,
+    "trim_trailing_white_space_on_save": true
 }
+
