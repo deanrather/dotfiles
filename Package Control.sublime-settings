@@ -13,9 +13,11 @@
 		"Function Name Display",
 		"GitGutter",
 		"Google Search",
+		"HTML-CSS-JS Prettify",
 		"Insert Nums",
 		"LineEndings",
 		"MarkdownEditing",
+		"MySQL Snippets",
 		"nginx",
 		"Package Control",
 		"SideBarEnhancements",
@@ -23,6 +25,7 @@
 		"SublimeLinter-jshint",
 		"SublimeLinter-php",
 		"SublimeLinter-shellcheck",
+		"Table Editor",
 		"Theme - itg.flat"
 	]
 }

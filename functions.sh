@@ -71,16 +71,16 @@ on_hotkey()
     # this script runs until closed with ctrl+c
     while true
     do
-        
+
         # clear any existing hotkey file
         rm -f $hotkey_file
-        
+
         # wait until a hotkey file exists
         while [ ! -e $hotkey_file ]
         do
             sleep 0.1
         done;
-        
+
         # run your command
         eval "$@"
     done
@@ -135,7 +135,7 @@ execute_on_change()
     do
         new_hash="$(find "$path" -type f | md5sum)"
         if [[ $old_hash != $new_hash ]]
-        then           
+        then
             $command
             old_hash=$new_hash
         fi
@@ -253,7 +253,7 @@ git_branch()
 {
     echo "git checkout -b $1"
     git checkout -b $1
-    
+
     echo "git push -u origin $1"
     git push -u origin $1
 }
@@ -279,7 +279,7 @@ git_rename_remote_branch()
 git_repo_is_clean()
 {
     repo="$1"
-    
+
     cd "$repo"
     if [[ -n $(git status --porcelain) ]]
     then
@@ -321,9 +321,9 @@ github_shortenurl()
     # - Warn if url looks like a commit instead of a head
     # - Warn if no /raw part on the end
     # - Output only the new URL if it worked
-    
+
     local long_url short_url code orl_arg code_arg response
-    
+
     if [ -n "$1" ]
     then
         long_url="$(echo $1 | sed 's/githubusercontent/github/g')"
@@ -331,15 +331,15 @@ github_shortenurl()
         describe_function "$FUNCNAME"
         return 1
     fi
-    
+
     if [ -n "$2" ]
     then
         curl -o- -i -s http://git.io -F "url=$long_url" -F "code=$2"
     else
         curl -o- -i -s http://git.io -F "url=$long_url"
     fi
-    
-    echo 
+
+    echo
 }
 
 # Set the terminal title
@@ -398,7 +398,7 @@ copy_last_command()
 # View active network connections
 view_network()
 {
-    lsof -i
+    sudo lsof -i
 }
 
 # Displays a hash of a directory recursively
@@ -457,9 +457,9 @@ colour_percentage()
     g="\e[0;32m";
     y="\e[0;33m";
     r="\e[0;31m";
-    
-    if   [ "$1" -lt "71" ]; then echo -en "$g$1%$w"; 
-    elif [ "$1" -gt "80" ]; then echo -en "$r$1%$w"; 
+
+    if   [ "$1" -lt "71" ]; then echo -en "$g$1%$w";
+    elif [ "$1" -gt "80" ]; then echo -en "$r$1%$w";
     else                         echo -en "$y$1%$w"; fi
 }
 
@@ -481,7 +481,7 @@ describe_function()
 
     # tmp hax
     function_name="$(echo $function_name | sed 's/dotfiles_/dotfiles /g')"
-            
+
     echo -en "\n\t$function_name\n"
 
     let "line_number-=1"
@@ -517,10 +517,10 @@ describe_functions()
 # Adds a keypair if one does not exist.
 # Echo's out the public key in the format expected by add_remote_user (username, fullname, pubkey)
 #
-# Usage: 
+# Usage:
 #
 #    request_remote_user
-#    
+#
 request_remote_user()
 {
     USERNAME="$USER"
@@ -543,7 +543,7 @@ request_remote_user()
 
 # Adds a new user to the system, allowing access by the provided public key.
 #
-# Usage: 
+# Usage:
 #
 #    add_remote_user "<username>" "<Full Name>" "<Public Key>"
 #
