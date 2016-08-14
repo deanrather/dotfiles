@@ -261,7 +261,7 @@ git_branch()
 git_prerelease()
 {
 	VERSION=$(git branch | grep -Po '\* release/.+' | cut -d / -f 2)
-	if ! -e "$VERSION"
+	if [ -z "$VERSION" ]
 	then
 		echo "Error: not on a release branch."
 		return 1
@@ -273,12 +273,13 @@ git_prerelease()
 		PRERELEASE=$(git tag | grep -Po "v$VERSION-\d+" | sort | tail -n 1 | cut -d '-' -f 2)
 	fi
 	NEW_PRERELEASE=$((PRERELEASE+1))
+	NEW_VERSION="$VERSION-$NEW_PRERELEASE"
 
-	sed -i "s/\"version\":\s\"\w\.\w\.\w-*\w*\"/\"version\": \"$NEW_PRERELEASE\"/" package.json
+	sed -i "s/\"version\":\s\"\w\.\w\.\w-*\w*\"/\"version\": \"$NEW_VERSION\"/" package.json
 	git add package.json
-	git commit -m "new prerelease version: v$PRERELEASE"
-	git tag "v$NEW_PRERELEASE"
-	echo -n "push with:\n\n\tgit push && git push --tags\n"
+	git commit -m "new prerelease version: v$NEW_VERSION"
+	git tag "v$NEW_VERSION"
+	echo -e "push with:\n\n\tgit push && git push --tags\n"
 }
 
 # Rename a remote git branch
