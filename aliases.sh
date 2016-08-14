@@ -6,6 +6,11 @@ alias dr="dotfiles reload"
 alias dp="dotfiles pull && dotfiles push"
 alias dv="dotfiles version"
 
+# Docker
+alias dnpm="sudo docker run -v $PWD:/app/ -w /app/ node npm"
+alias dnode="sudo docker run -v $PWD:/app/ -w /app/ node node"
+alias denv="sudo docker run -v $PWD:/app/ -w /app/ -it node bash"
+
 # Vagrant
 alias v="vagrant"
 alias vup="vagrant up"

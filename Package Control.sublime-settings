@@ -26,6 +26,7 @@
 		"SublimeLinter-php",
 		"SublimeLinter-shellcheck",
 		"Table Editor",
-		"Theme - itg.flat"
+		"Theme - itg.flat",
+		"Tmux"
 	]
 }

@@ -4,6 +4,7 @@ curl
 figlet
 fortune-mod
 git
+git-flow
 gparted
 htop
 lolcat
