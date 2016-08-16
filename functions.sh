@@ -258,7 +258,13 @@ git_branch()
     git push -u origin $1
 }
 
-git_prerelease()
+git_tagrc_push()
+{
+	git_tagrc
+	git push & git push --tags
+}
+
+git_tagrc()
 {
 	VERSION=$(git branch | grep -Po '\* release/.+' | cut -d / -f 2)
 	if [ -z "$VERSION" ]
@@ -277,9 +283,9 @@ git_prerelease()
 
 	sed -i "s/\"version\":\s\"\w\.\w\.\w-*\w*\"/\"version\": \"$NEW_VERSION\"/" package.json
 	git add package.json
-	git commit -m "new prerelease version: v$NEW_VERSION"
+	git commit -m "new release candidate: v$NEW_VERSION"
 	git tag "v$NEW_VERSION"
-	echo -e "push with:\n\n\tgit push && git push --tags\n"
+	echo -e "push with:\n\n\tgit push & git push --tags\n"
 }
 
 # Rename a remote git branch
