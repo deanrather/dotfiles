@@ -94,12 +94,4 @@ TerminalWindow .notebook tab:active {
 
 Optional, but it'll save your eyes!
 
-```
-git clone https://github.com/Kilian/f.lux-indicator-applet.git
-cd f.lux-indicator-applet
-sudo python setup.py install
-sudo apt-get install python-pip
-sudo -E pip install pexpect
-sudo apt-get install -y python-gconf python-glade2 python-appindicator
-fluxgui &
-```
+<script src="https://gist.github.com/deanrather/b547e486d58612c87c6a2e2a0bc876b8.js"></script>
