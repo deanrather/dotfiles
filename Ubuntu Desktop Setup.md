@@ -94,4 +94,4 @@ TerminalWindow .notebook tab:active {
 
 Optional, but it'll save your eyes!
 
-<script src="https://gist.github.com/deanrather/b547e486d58612c87c6a2e2a0bc876b8.js"></script>
+https://gist.github.com/deanrather/b547e486d58612c87c6a2e2a0bc876b8
