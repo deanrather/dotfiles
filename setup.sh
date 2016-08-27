@@ -4,8 +4,8 @@
 # TODO: better description
 
 
-# Install packages
-packages="$(cat ~/dotfiles/packages.txt)"
+# Install server packages
+packages="$(cat ~/dotfiles/packages-server.txt)"
 if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
 then
     export DEBIAN_FRONTEND=noninteractive
@@ -13,6 +13,21 @@ then
     echo "$packages"
     sudo apt-get update
     sudo apt-get install -y $packages
+fi
+install_tmux_2
+
+# Install desktop packages
+if xset q &>/dev/null
+then
+    packages="$(cat ~/dotfiles/packages-desktop.txt)"
+    if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
+    then
+        export DEBIAN_FRONTEND=noninteractive
+        echo "Installing:"
+        echo "$packages"
+        sudo apt-get update
+        sudo apt-get install -y $packages
+    fi
 fi
 
 
@@ -43,7 +58,7 @@ backup_symlink ~/dotfiles/tig.conf                          ~/.tigrc
 backup_symlink ~/dotfiles/vim.conf                          ~/.vimrc
 backup_symlink ~/dotfiles/tmux.conf                         ~/.tmux.conf
 backup_symlink ~/dotfiles/terminator.conf                   ~/.config/terminator/config
-backup_symlink ~/dotfiles/Package\ Control.sublime-settings ~/.config/sublime-text-3/Packages/User/Package\ Control.sublime-settings
+backup_symlink ~/dotfiles/Package\ Control.sublime-settings "/home/$USER/.config/sublime-text-3/Packages/User/Package Control.sublime-settings"
 backup_symlink ~/dotfiles/Preferences.sublime-settings      ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 
 

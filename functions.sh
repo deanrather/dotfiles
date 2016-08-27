@@ -631,6 +631,24 @@ grant_user_superpowers()
 	sudo chmod 0440 "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
 }
 
+
+
+install_tmux_2()
+{
+	if ! tmux -V | grep 'tmux 2.0'
+	then
+		sudo apt-get update
+		sudo apt-get install -y python-software-properties software-properties-common
+		sudo add-apt-repository -y ppa:pi-rho/dev
+		sudo apt-get update
+		sudo apt-get install -y tmux
+	fi
+	echo "Current Tmux Version: $(tmux -V)"
+}
+
+
+# ---------------------------------
+
 # Get list of misc functions defined
 [[ "$misc_function_list" ]] ||
     misc_function_list=$(grep -Fxv -f \
