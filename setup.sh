@@ -14,6 +14,8 @@ then
     sudo apt-get update
     sudo apt-get install -y $packages
 fi
+
+source ./functions.sh
 install_tmux_2
 
 # Install desktop packages
@@ -77,9 +79,6 @@ grep -q "dotfiles.sh" ~/.bashrc || echo -e "\n[ -f ~/dotfiles/dotfiles.sh ] && .
 
 
 # Done!
-echo "$(git config --global user.name) configured"
+echo 'dotfiles is configured!'
+echo -en "reload your profile to begin using:\n\n\tsource ~/.profile\n\n"
 echo -en "see:\n\tdotfiles help\n\n"
-
-
-# Reload profile
-source ~/.profile
