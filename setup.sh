@@ -42,6 +42,7 @@ source ~/dotfiles/functions.sh
 backup_symlink ~/dotfiles/tig.conf                          ~/.tigrc
 backup_symlink ~/dotfiles/vim.conf                          ~/.vimrc
 backup_symlink ~/dotfiles/tmux.conf                         ~/.tmux.conf
+backup_symlink ~/dotfiles/terminator.conf                   ~/.config/terminator/config
 backup_symlink ~/dotfiles/Package\ Control.sublime-settings ~/.config/sublime-text-3/Packages/User/Package\ Control.sublime-settings
 backup_symlink ~/dotfiles/Preferences.sublime-settings      ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 

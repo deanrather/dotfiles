@@ -57,6 +57,7 @@ backup_remove()
 backup_symlink()
 {
     backup_remove "$2"
+    mkdir -p "$(dirname $2)"
     ln -s "$1" "$2"
 }
 
