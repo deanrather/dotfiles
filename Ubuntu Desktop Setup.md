@@ -88,10 +88,3 @@ TerminalWindow .notebook tab:active {
     background-color: #def;
 }
 ```
-
-
-## Install Flux
-
-Optional, but it'll save your eyes!
-
-https://gist.github.com/deanrather/b547e486d58612c87c6a2e2a0bc876b8

@@ -12,6 +12,8 @@ lsyncd
 ncdu
 nload
 nmap
+redshift
+redshift-gtk
 sendip
 shellcheck
 ssh
