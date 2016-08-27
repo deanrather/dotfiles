@@ -1,0 +1,8 @@
+etherape
+gparted
+redshift
+redshift-gtk
+terminator
+xclip
+xdotool
+wireshark
