@@ -10,6 +10,7 @@ alias dv="dotfiles version"
 alias dnpm="sudo docker run --rm -v $PWD:/app/ -w /app/ -it node npm"
 alias dnode="sudo docker run --rm -v $PWD:/app/ -w /app/ -it node node"
 alias denv="sudo docker run --rm -v $PWD:/app/ -w /app/ -it node bash"
+alias dps="sudo docker ps"
 
 # Vagrant
 alias v="vagrant"

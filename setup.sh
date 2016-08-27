@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # setup.sh
 # sets up dotfiles.sh to auto-load with the terminal
 # TODO: better description
@@ -8,6 +8,7 @@
 packages="$(cat ~/dotfiles/packages.txt)"
 if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
 then
+    export DEBIAN_FRONTEND=noninteractive
     echo "Installing:"
     echo "$packages"
     sudo apt-get update
@@ -16,18 +17,21 @@ fi
 
 
 # Configure Git
-if [ -z "$(git config --global user.name)" ]
+if [ ! "$1" == '--anon' ]
 then
-    echo -n "Git user name (The name to appear on your commits): "
-    read git_user_name
-    git config --global user.name "$git_user_name"
-fi
+  if [ -z "$(git config --global user.name)" ]
+  then
+      echo -n "Git user name (The name to appear on your commits): "
+      read git_user_name
+      git config --global user.name "$git_user_name"
+  fi
 
-if [ -z "$(git config --global user.email)" ]
-then
-    echo -n "Git user email (The email to appear on your commits): "
-    read git_user_email
-    git config --global user.email "$git_user_email"
+  if [ -z "$(git config --global user.email)" ]
+  then
+      echo -n "Git user email (The email to appear on your commits): "
+      read git_user_email
+      git config --global user.email "$git_user_email"
+  fi
 fi
 git config --global include.path ~/dotfiles/git.conf
 

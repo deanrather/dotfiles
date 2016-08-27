@@ -2,6 +2,9 @@
 # functions.sh
 # misc functions to help with your workstation.
 
+# execute a command and display stderr in red
+color()(set -o pipefail;"$@" 2>&1>&3|sed $'s,.*,\e[31m&\e[m,'>&2)3>&1
+colour()(color $@)
 
 # Writes a log to ~/dotfile-logs/
 # Usage: echo <message> | log [<logfile name>]
