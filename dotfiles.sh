@@ -73,7 +73,7 @@ _dotfiles_reload()
     # unset dotfiles_function_list
     source ~/.profile
 }
-   
+
 # Updates dotfiles from github
 _dotfiles_pull()
 {
@@ -88,6 +88,17 @@ _dotfiles_push()
 {
     cd ~/dotfiles
     git commit -am "updated with dotfiles push"
+    if ! git remote -v | grep origin | grep "git@"
+    then
+	    if ! ssh -T git@github.com
+    	then
+    		echo "ERROR: no permission to push"
+    		exit 1
+	    fi
+	    new_origin="$(git remote -v | grep origin | grep push | sed 's|https://github.com/|git@github.com:|' | cut -f 2 | cut -d ' ' -f 1)"
+	    git remote rm origin
+	    git remote add origin "$new_origin"
+	fi
     git push
     git status
     cd -

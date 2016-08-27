@@ -584,6 +584,7 @@ request_remote_user()
 # eg:
 #
 #    add_remote_user "dean" "Dean Rather" "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChab0m+uBRifnBEn8DGFc0rUWDtuMB93Z5lM9yKxO0SHN0e4Fhozv83LRxGThoWDl6jEFjaW2RqqbtSgCJQBnJrQDdKxeLgkLOz6FEWnQsvRsT71ngLSXUEKWhIfJS1D+Cur6q7CmiaZf86Yh3T2bsaqS2x0aWtWTd6ybLpqFATdEQrzJH1SYOGNe3uRx/hR9d3D3v20Azm2bhaQ4EteSdf11dGcRdmE4oQNPZXHLPtpZQMVpKbpNuuUMwddh/TPnnRq7WSU7ZAKDHPxPvlQRvqlq6xU0L8vl2pGvJhnJHg9ZZWZRcAMnLwu+Zh0vMtpOFnT4SUXlyWqqwjA1c9c9x dean@dean-XPS-8700"
+#    add_remote_user d "Dean Rather" "$(wget -q -O - deanrather.com/pubkeys.txt)"
 #
 add_remote_user()
 {
@@ -591,21 +592,22 @@ add_remote_user()
     FULLNAME="$2"
     PUBKEY="$3"
 
-    sudo adduser --disabled-password "$USERNAME" --gecos="$FULLNAME"
+	sudo adduser --quiet --disabled-password "$USERNAME" --gecos="$FULLNAME"
     sudo mkdir "/home/$USERNAME/.ssh"
-    sudo chown "$USERNAME:$USERNAME" "/home/$USERNAME/.ssh/"
     echo -n "Adding public key "
     echo "$PUBKEY" | sudo tee "/home/$USERNAME/.ssh/authorized_keys"
-    sudo chown "$USERNAME:$USERNAME" "/home/$USERNAME/.ssh/authorized_keys"
+    sudo chown -R "$USERNAME:$USERNAME" "/home/$USERNAME/.ssh/"
+
+    grant_user_superpowers "$USERNAME"
 
     IPS="$(ifconfig | grep -Po 'inet addr:.+? ' | grep -v '127.0.0.1' | cut -d":" -f2)"
-    echo "$FULLNAME can now access your machine as the user $USERNAME via of the following IPs:"
+    echo -e "\n\n$FULLNAME can now access this machine as the user $USERNAME via one of the following IPs:"
     echo "$IPS"
+    wget -q -O - icanhazip.com
 
     # TODO:
     # - Add validation for inputs
     # - Add error handling
-    # - check sudo perms
 }
 
 
@@ -624,8 +626,9 @@ set_hostname()
 # eg: grant_user_superpowers dean
 grant_user_superpowers()
 {
-    user="$1"
-    echo "$user ALL=(ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$user-sudo-nopasswd"
+    USERNAME="$1"
+    echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
+	sudo chmod 0440 "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
 }
 
 # Get list of misc functions defined
