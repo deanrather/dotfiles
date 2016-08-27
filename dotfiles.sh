@@ -90,7 +90,7 @@ _dotfiles_push()
     git commit -am "updated with dotfiles push"
     if ! git remote -v | grep origin | grep "git@"
     then
-	    if ! ssh -T git@github.com
+	    if ! ssh -T git@github.com 2>&1 | grep "successfully authenticated"
     	then
     		echo "ERROR: no permission to push"
     		exit 1
