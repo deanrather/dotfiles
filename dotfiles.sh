@@ -22,6 +22,14 @@ export HISTTIMEFORMAT="%Y-%m-%d %T "
 # so we can know which functions were defined.
 [[ "$original_function_list" ]] || original_function_list=$(compgen -A function)
 
+# Powerline
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -f ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh ]; then
+    source ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
+fi
 
 # Source any scripts in the ~/dotfiles-autoload directory
 [ -d ~/dotfiles-autoload ] || mkdir ~/dotfiles-autoload

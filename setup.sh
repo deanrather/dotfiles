@@ -15,7 +15,9 @@ then
     sudo apt-get install -y $packages
 fi
 
-source ./functions.sh
+source ~/dotfiles/functions.sh
+pip install --user powerline-status
+install_powerline_fonts
 install_tmux_2
 
 # Install desktop packages
@@ -55,7 +57,6 @@ git config --global include.path ~/dotfiles/git.conf
 
 # Symlink config files
 echo "Symlinking config files"
-source ~/dotfiles/functions.sh
 backup_symlink ~/dotfiles/tig.conf                          ~/.tigrc
 backup_symlink ~/dotfiles/vim.conf                          ~/.vimrc
 backup_symlink ~/dotfiles/tmux.conf                         ~/.tmux.conf

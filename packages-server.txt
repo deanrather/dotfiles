@@ -11,6 +11,7 @@ lsyncd
 ncdu
 nload
 nmap
+python-pip
 sendip
 shellcheck
 ssh
