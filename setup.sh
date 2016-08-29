@@ -1,44 +1,67 @@
-#!/bin/bash
+#!/bin/bash -e
 # setup.sh
 # sets up dotfiles.sh to auto-load with the terminal
 # TODO: better description
 
 
-# Install packages
-packages="$(cat ~/dotfiles/packages.txt)"
+# Install server packages
+packages="$(cat ~/dotfiles/packages-server.txt)"
 if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
 then
+    export DEBIAN_FRONTEND=noninteractive
     echo "Installing:"
     echo "$packages"
     sudo apt-get update
     sudo apt-get install -y $packages
 fi
 
+source ~/dotfiles/functions.sh
+pip install --user powerline-status
+install_powerline_fonts
+install_tmux_2
 
-# Configure Git
-if [ -z "$(git config --global user.name)" ]
+# Install desktop packages
+if xset q &>/dev/null
 then
-    echo -n "Git user name (The name to appear on your commits): "
-    read git_user_name
-    git config --global user.name "$git_user_name"
+    packages="$(cat ~/dotfiles/packages-desktop.txt)"
+    if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
+    then
+        export DEBIAN_FRONTEND=noninteractive
+        echo "Installing:"
+        echo "$packages"
+        sudo apt-get update
+        sudo apt-get install -y $packages
+    fi
 fi
 
-if [ -z "$(git config --global user.email)" ]
+
+# Configure Git
+if [ ! "$1" == '--anon' ]
 then
-    echo -n "Git user email (The email to appear on your commits): "
-    read git_user_email
-    git config --global user.email "$git_user_email"
+  if [ -z "$(git config --global user.name)" ]
+  then
+      echo -n "Git user name (The name to appear on your commits): "
+      read git_user_name
+      git config --global user.name "$git_user_name"
+  fi
+
+  if [ -z "$(git config --global user.email)" ]
+  then
+      echo -n "Git user email (The email to appear on your commits): "
+      read git_user_email
+      git config --global user.email "$git_user_email"
+  fi
 fi
 git config --global include.path ~/dotfiles/git.conf
 
 
 # Symlink config files
 echo "Symlinking config files"
-source ~/dotfiles/functions.sh
 backup_symlink ~/dotfiles/tig.conf                          ~/.tigrc
 backup_symlink ~/dotfiles/vim.conf                          ~/.vimrc
 backup_symlink ~/dotfiles/tmux.conf                         ~/.tmux.conf
-backup_symlink ~/dotfiles/Package\ Control.sublime-settings ~/.config/sublime-text-3/Packages/User/Package\ Control.sublime-settings
+backup_symlink ~/dotfiles/terminator.conf                   ~/.config/terminator/config
+backup_symlink ~/dotfiles/Package\ Control.sublime-settings "/home/$USER/.config/sublime-text-3/Packages/User/Package Control.sublime-settings"
 backup_symlink ~/dotfiles/Preferences.sublime-settings      ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 
 
@@ -57,9 +80,6 @@ grep -q "dotfiles.sh" ~/.bashrc || echo -e "\n[ -f ~/dotfiles/dotfiles.sh ] && .
 
 
 # Done!
-echo "$(git config --global user.name) configured"
+echo 'dotfiles is configured!'
+echo -en "reload your profile to begin using:\n\n\tsource ~/.profile\n\n"
 echo -en "see:\n\tdotfiles help\n\n"
-
-
-# Reload profile
-source ~/.profile

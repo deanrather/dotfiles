@@ -7,10 +7,11 @@ alias dp="dotfiles pull && dotfiles push"
 alias dv="dotfiles version"
 
 # Docker
-alias dnpm="sudo docker run --rm -v $PWD:/app/ -w /app/ node npm"
-alias dnode="sudo docker run --rm -v $PWD:/app/ -w /app/ node node"
+alias dnpm="sudo docker run --rm -v $PWD:/app/ -w /app/ -it node npm"
+alias dnode="sudo docker run --rm -v $PWD:/app/ -w /app/ -it node node"
 alias denv="sudo docker run --rm -v $PWD:/app/ -w /app/ -it node bash"
 alias dc="docker-compose"
+alias dps="sudo docker ps"
 
 # Vagrant
 alias v="vagrant"
@@ -42,7 +43,7 @@ alias edit="vim"
 alias e="edit"
 alias ea="edit ~/dotfiles-autoload/aliases.sh && dr"
 alias eg="edit ~/.gitrc"
-alias et="edit ~/.tmux.conf"
+alias et="edit ~/.tmux.conf && tmux source ~/.tmux.conf"
 alias ev="edit ~/.vimrc"
 alias ed="edit ~/dotfiles/dotfiles.sh"
 

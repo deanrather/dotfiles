@@ -5,13 +5,13 @@ figlet
 fortune-mod
 git
 git-flow
-gparted
 htop
 lolcat
 lsyncd
 ncdu
 nload
 nmap
+python-pip
 sendip
 shellcheck
 ssh
@@ -22,6 +22,3 @@ tree
 uuid
 vim
 wget
-wireshark
-xclip
-xdotool

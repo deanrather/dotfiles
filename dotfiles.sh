@@ -22,6 +22,14 @@ export HISTTIMEFORMAT="%Y-%m-%d %T "
 # so we can know which functions were defined.
 [[ "$original_function_list" ]] || original_function_list=$(compgen -A function)
 
+# Powerline
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -f ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh ]; then
+    source ~/.local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
+fi
 
 # Source any scripts in the ~/dotfiles-autoload directory
 [ -d ~/dotfiles-autoload ] || mkdir ~/dotfiles-autoload
@@ -73,7 +81,7 @@ _dotfiles_reload()
     # unset dotfiles_function_list
     source ~/.profile
 }
-   
+
 # Updates dotfiles from github
 _dotfiles_pull()
 {
@@ -88,6 +96,17 @@ _dotfiles_push()
 {
     cd ~/dotfiles
     git commit -am "updated with dotfiles push"
+    if ! git remote -v | grep origin | grep "git@"
+    then
+	    if ! ssh -T git@github.com 2>&1 | grep "successfully authenticated"
+    	then
+    		echo "ERROR: no permission to push"
+    		exit 1
+	    fi
+	    new_origin="$(git remote -v | grep origin | grep push | sed 's|https://github.com/|git@github.com:|' | cut -f 2 | cut -d ' ' -f 1)"
+	    git remote rm origin
+	    git remote add origin "$new_origin"
+	fi
     git push
     git status
     cd -

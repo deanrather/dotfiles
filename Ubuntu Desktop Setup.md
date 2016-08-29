@@ -88,18 +88,3 @@ TerminalWindow .notebook tab:active {
     background-color: #def;
 }
 ```
-
-
-## Install Flux
-
-Optional, but it'll save your eyes!
-
-```
-git clone https://github.com/Kilian/f.lux-indicator-applet.git
-cd f.lux-indicator-applet
-sudo python setup.py install
-sudo apt-get install python-pip
-sudo -E pip install pexpect
-sudo apt-get install -y python-gconf python-glade2 python-appindicator
-fluxgui &
-```
