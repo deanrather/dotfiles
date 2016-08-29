@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Workstation
+# Dotfiles
 alias ds="dotfiles"
 alias dr="dotfiles reload"
 alias dp="dotfiles pull && dotfiles push"
@@ -10,6 +10,7 @@ alias dv="dotfiles version"
 alias dnpm="sudo docker run --rm -v $PWD:/app/ -w /app/ node npm"
 alias dnode="sudo docker run --rm -v $PWD:/app/ -w /app/ node node"
 alias denv="sudo docker run --rm -v $PWD:/app/ -w /app/ -it node bash"
+alias dc="docker-compose"
 
 # Vagrant
 alias v="vagrant"
@@ -31,6 +32,10 @@ alias ta="tig --all"
 alias gsu="git submodule update --init --recursive"
 alias gm="git merge -Xignore-space-change"
 alias git_no_merged="git branch -a --no-merged"
+
+# Tmux
+alias t="tmux"
+alias ta="tmux attach"
 
 # Edit
 alias edit="vim"

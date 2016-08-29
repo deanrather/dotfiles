@@ -266,6 +266,8 @@ git_tagrc_push()
 
 git_tagrc()
 {
+	# todo: check clean
+
 	VERSION=$(git branch | grep -Po '\* release/.+' | cut -d / -f 2)
 	if [ -z "$VERSION" ]
 	then
