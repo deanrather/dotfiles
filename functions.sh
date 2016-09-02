@@ -57,7 +57,7 @@ backup_remove()
 backup_symlink()
 {
     backup_remove "$2"
-    mkdir -p "$(dirname $2)"
+    mkdir -p "$(dirname "$2")"
     ln -s "$1" "$2"
 }
 
@@ -667,4 +667,3 @@ install_powerline_fonts()
     misc_function_list=$(grep -Fxv -f \
         <(echo "$original_function_list") \
         <(compgen -A function))
-
