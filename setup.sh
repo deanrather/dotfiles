@@ -16,14 +16,14 @@ then
 fi
 
 source ~/dotfiles/functions.sh
-pip install --user powerline-status
-install_powerline_fonts
 install_tmux_2
 
 # Install desktop packages
 if xset q &>/dev/null
 then
-    packages="$(cat ~/dotfiles/packages-desktop.txt)"
+   pip install --user powerline-status
+   install_powerline_fonts
+   packages="$(cat ~/dotfiles/packages-desktop.txt)"
     if apt-cache policy $packages | grep 'Installed: (none)' > /dev/null
     then
         export DEBIAN_FRONTEND=noninteractive
