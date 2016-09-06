@@ -51,6 +51,13 @@ alias t="tmux"
 alias ta="tmux attach"
 
 
+# NPM
+alias npmi="npm install"
+alias npmig="npm install --global"
+alias npmis="npm install --save"
+alias npmisd="npm install --save --dev"
+
+
 # Edit
 alias edit="vim"
 alias e="edit"
