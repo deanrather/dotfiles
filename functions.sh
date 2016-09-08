@@ -303,7 +303,7 @@ git_rename_remote_branch()
         echo "Rationale : Rename a branch on the server without checking it out."
         echo "Usage     : git_rename_remote_branch <remote> <old name> <new name>"
         echo "Example   : git_rename_remote_branch origin master release"
-        exit 1
+        return 1
     fi
 
     echo "Renaming $1 $2 -> $3..."
