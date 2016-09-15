@@ -294,6 +294,14 @@ git_tagrc()
 	echo -e "push with:\n\n\tgit push & git push --tags\n"
 }
 
+git_bump()
+{
+  date > bump.txt &&
+  git add bump.txt &&
+  git commit -am "bump" &&
+  git push
+}
+
 # Rename a remote git branch
 # Usage: git_rename_remote_branch <oldbranch> <newbranch>
 git_rename_remote_branch()
@@ -336,8 +344,8 @@ git_delete_remote_branch()
 # Usage: git_preview_merge <branchname>
 git_preview_merge()
 {
-    branchname=1
-    git diff "...origin/$branchname"
+    branchname="$1"
+    git diff --ignore-all-space "...origin/$branchname"
 }
 
 
