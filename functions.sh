@@ -349,6 +349,18 @@ git_preview_merge()
 }
 
 
+git_status_merged()
+{
+  git status
+
+  echo "merged:"
+  git branch -a --merged
+
+  echo "no-merged:"
+  git branch -a --no-merged
+}
+
+
 # Run a program in the background
 # Usage: run_in_background <command>
 run_in_background()
