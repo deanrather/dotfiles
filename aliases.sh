@@ -36,6 +36,7 @@ alias g="git"
 alias gp="git pull --no-edit --all --tags && git push && git push --tags"
 alias gs="git status"
 alias gd="git diff"
+alias git_diff_ignore_whitespace="git diff --ignore-all-space"
 alias gf="git fetch --all --tags"
 alias gb="git_branch"
 alias ga="git add "
@@ -45,6 +46,7 @@ alias gsu="git submodule update --init --recursive"
 alias gm="git merge -Xignore-space-change"
 alias git_no_merged="git branch -a --no-merged"
 alias git_logs_nice="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+
 
 # Tmux
 alias t="tmux"
@@ -67,6 +69,9 @@ alias et="edit ~/.tmux.conf && tmux source ~/.tmux.conf"
 alias ev="edit ~/.vimrc"
 alias ed="edit ~/dotfiles/dotfiles.sh"
 
+# History
+alias he="history -a" # export history
+alias hi="history -n" # import history
 
 # Other
 alias i="sudo apt-get install -y"
