@@ -13,7 +13,6 @@ nload
 nmap
 python-pip
 sendip
-shellcheck
 ssh
 tig
 tmux
