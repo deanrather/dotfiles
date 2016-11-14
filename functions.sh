@@ -431,6 +431,7 @@ gitlab_clone()
 github_add_remote()
 {
     git remote add github git@github.com:/$1.git
+    git remote -v
     git fetch github
 }
 
@@ -439,6 +440,7 @@ github_add_remote()
 bitbucket_add_remote()
 {
     git remote add bitbucket git@bitbucket.com:/$1.git
+    git remote -v
     git fetch bitbucket
 }
 
@@ -447,6 +449,7 @@ bitbucket_add_remote()
 gitlab_add_remote()
 {
     git remote add gitlab git@gitlab.com:/$1.git
+    git remote -v
     git fetch gitlab
 }
 
