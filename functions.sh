@@ -1,6 +1,7 @@
 #!/bin/bash
 # functions.sh
 # misc functions to help with your workstation.
+# wget https://raw.githubusercontent.com/deanrather/dotfiles/master/functions.sh && source functions.sh
 
 # execute a command and display stderr in red
 color()(set -o pipefail;"$@" 2>&1>&3|sed $'s,.*,\e[31m&\e[m,'>&2)3>&1
@@ -735,6 +736,18 @@ record_gif()
 record_gif2()
 {
   sudo apt-get install -y imagemagick mplayer gtk-recordmydesktop
+}
+
+is_online()
+{
+  IP="$1"
+  echo -n "$IP is "
+  if ping -c 1 "$IP" > /dev/null
+  then
+    echo "online"
+  else
+    echo "offline"
+  fi
 }
 
 # ---------------------------------
