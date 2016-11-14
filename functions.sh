@@ -404,6 +404,7 @@ set_term_title()
     echo -ne "\033]0;$1\007"
 }
 
+
 # Clone from github
 # Usage: github_clone username/repo
 github_clone()
@@ -423,6 +424,30 @@ bitbucket_clone()
 gitlab_clone()
 {
     git clone git@gitlab.com:/$1.git
+}
+
+# Add a remote to github
+# Usage: github_add_remote username/repo
+github_add_remote()
+{
+    git remote add github git@github.com:/$1.git
+    git fetch github
+}
+
+# Add a remote to bitbucket
+# Usage: bitbucket_add_remote username/repo
+bitbucket_add_remote()
+{
+    git remote add bitbucket git@bitbucket.com:/$1.git
+    git fetch bitbucket
+}
+
+# Add a remote to gitlab
+# Usage: gitlab_add_remote username/repo
+gitlab_add_remote()
+{
+    git remote add gitlab git@gitlab.com:/$1.git
+    git fetch gitlab
 }
 
 
@@ -581,7 +606,7 @@ request_remote_user()
 {
     USERNAME="$USER"
     # todo: grep -e "^${USER}:" (because what if your usename is "d")
-    FULLNAME="$(getent passwd | grep $USER | cut -d':' -f5 | cut -d',' -f1)"
+    FULLNAME="$(getent passwd | grep ^$USER: | cut -d':' -f5 | cut -d',' -f1)"
 
     if [ ! -e ~/.ssh/id_rsa.pub ]
     then
