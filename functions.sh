@@ -778,6 +778,17 @@ is_online()
   fi
 }
 
+serve_current_dir()
+{
+    which browser-sync || npm i -g browser-sync
+    sudo "$(which node)" "$(which browser-sync)" start --server --port 80
+}
+
+detect_ip_conflicts()
+{
+  sudo arp-scan -I eno1 -l
+}
+
 # ---------------------------------
 
 # Get list of misc functions defined
