@@ -789,6 +789,20 @@ detect_ip_conflicts()
   sudo arp-scan -I eno1 -l
 }
 
+build_2gb_swapfile()
+{
+  if [ "$(wc -l < /proc/swaps)" == "1" ]
+  then
+   echo "Making Swapfile"
+   sudo dd if=/dev/zero of=/.swap bs=1024 count=2M # 2GB Swapfile
+   sudo mkswap /.swap
+   echo "/.swap swap swap sw 0 0" | sudo tee -a /etc/fstab
+   sudo chown root:root /.swap
+   sudo chmod 0600 /.swap
+   sudo swapon /.swap
+  fi
+}
+
 # ---------------------------------
 
 # Get list of misc functions defined
