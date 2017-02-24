@@ -19,6 +19,7 @@ alias docker-kill-all-containers='docker kill $(docker ps -qa)'
 alias docker-rm-all-containers='docker rm $(docker ps -qa)'
 alias docker-rm-all-images='docker rmi $(docker images -qa)'
 alias docker-rm-everything='docker-kill-all-containers; docker-rm-dangling-volumes; docker-rm-dangling-images; docker-rm-exited-containers; docker-rm-all-containers; docker-rm-all-images'
+alias docker-run-prev-image='docker run -it --rm "$(docker images -q | head -n 1)"'
 alias dc="docker-compose"
 alias dps="docker ps"
 
