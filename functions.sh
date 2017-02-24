@@ -7,11 +7,55 @@
 color()(set -o pipefail;"$@" 2>&1>&3|sed $'s,.*,\e[31m&\e[m,'>&2)3>&1
 colour()(color $@)
 
+
 # Writes a log to ~/dotfile-logs/
 # Usage: echo <message> | log [<logfile name>]
 # eg: echo "hello world" | log
 # eg: echo "hello world" | log mylog.log
 log()
+{
+    local message
+    local date
+    local pid
+    local log_path
+
+    # If there are no args
+    if [ $# -eq 0 ]
+    then
+      # Read message from STDIN
+      read message
+    else
+      # get message from args
+      message="$*"
+    fi
+
+    # If dir does not exist, create it
+    [ -d ~/dotfile-logs ] || mkdir ~/dotfile-logs
+
+    log_basename=dotfiles.log
+
+    # Concatenate dir with basename
+    log_path=~/dotfile-logs/"$log_basename"
+
+    # Create logfile if it doesn't exist
+    touch "$log_path"
+
+    # Get current time in ISO8601 format
+    # eg: 2014-08-29T19:01:46+10:00
+    date=$(date +%F\T%T%z | sed 's/^.\{22\}/&:/')
+
+    # Get process ID
+    pid=$$
+
+    # Append message to log file
+    echo "$date $pid $message" >> "$log_path"
+}
+
+# Writes a log to ~/dotfile-logs/
+# Usage: echo <message> | log [<logfile name>]
+# eg: echo "hello world" | log
+# eg: echo "hello world" | log mylog.log
+log2()
 {
     local message
     # Read message from STDIN
@@ -149,6 +193,23 @@ execute_on_change()
     done
 }
 
+args_example_1()
+{
+  local apple=false
+  local banana=false
+
+  for arg in "$@"
+  do
+    case $arg in
+      -a|--apple) apple=true ;;
+      -b|--banana) banana=true ;;
+      *) echo "unknown argument: $arg" ;;
+    esac
+  done
+
+  echo "apple: $apple"
+  echo "banana: $banana"
+}
 
 # Displays "Press [ENTER] to cancel..."
 # Returns:
@@ -348,6 +409,8 @@ git_preview_merge()
     branchname="$1"
     git diff --ignore-all-space "...origin/$branchname"
 }
+
+__git_complete git_preview_merge _git_checkout
 
 
 git_status_merged()
@@ -787,6 +850,34 @@ serve_current_dir()
 detect_ip_conflicts()
 {
   sudo arp-scan -I eno1 -l
+}
+
+execute_remote_script()
+{
+  script_url="$1"
+  shift # removes the first arg from the list of args
+  curl -s "$script_url" | bash -s $@
+}
+
+install_atom()
+{
+  latest_page_url="https://github.com/atom/atom/releases/latest"
+  echo "getting latest download url from $latest_page_url"
+  html_file_path="$(mktemp)"
+  curl --silent --location --output "$html_file_path" "$latest_page_url"
+
+  uri="$(cat "$html_file_path" | grep '.deb' | grep 'href=' | cut -d '"' -f 2)"
+  #url="https://github.com$uri"
+  url="https://github.com$uri"
+  echo "downloading latest package from: $url"
+  download_dir="$(mktemp -d)"
+  package_path="$download_dir/atom-amd64.deb"
+  curl --location --progress-bar --output "$package_path" "$url"
+
+  echo "installing from package: $package_path"
+  sudo dpkg -i "$package_path"
+
+  echo -e "latest atom installed\nuse:\n\n\tapm update\n\nto update atom's pacakges"
 }
 
 # ---------------------------------
