@@ -709,61 +709,9 @@ install_powerline_fonts()
 	mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 }
 
-
 record_gif()
 {
-  # Install xrectsel
-  # https://github.com/lolilolicon/xrectsel
-  if ! which xrectsel >> /dev/null
-  then
-    sudo apt-get install -y dh-autoreconf libx11-dev
-
-    tmp_src_dir="$(mktemp -d)"
-    git clone https://github.com/lolilolicon/xrectsel.git "$tmp_src_dir"
-    cd "$tmp_src_dir"
-    ./bootstrap
-    ./configure --prefix /usr
-    make
-    tmp_install_dir="$(mktemp -d)"
-    sudo make install
-    cd -
-  fi
-
-  # Install xclip
-  which xclip  >> /dev/null || sudo apt-get install -y xclip
-
-  # Get output file path
-  local output_dir=~/Pictures
-  mkdir -p "$output_dir"
-  local default_filename="recording__$(date +%Y-%m-%d_%H-%M-%S)"
-  read -p "Filename [$default_filename]: " filename
-  test "$filename" || filename="$default_filename"
-  local output_file_path="$output_dir/$filename".gif
-
-  echo "default_filename: $default_filename"
-  echo "filename: $filename"
-  echo "output_file_path: $output_file_path"
-
-  # Display instructions
-  echo -en "\n\n\tSelect area to begin recording\n\tTo stop, highlight this window and press: q\n\n"
-
-  # Get coords
-  local coords=$(xrectsel "-s %wx%h -i :0.0+%x,%y")
-  test "$coords" || return 1
-
-  # Record Gif
-  local command="ffmpeg -f x11grab -video_size cif -framerate 25 $coords -pix_fmt rgb8 -loop 0 '$output_file_path'"
-  eval "$command"
-  echo -n "Gif recorded to $output_file_path"
-
-  # Copy path to clipboard
-  echo -n "$output_file_path" | xclip -selection clipboard
-  echo " and path copied to clipboard"
-}
-
-record_gif2()
-{
-  sudo apt-get install -y imagemagick mplayer gtk-recordmydesktop
+  ~/dotfiles/functions/record_gif.sh
 }
 
 is_online()
