@@ -409,8 +409,7 @@ git_preview_merge()
     branchname="$1"
     git diff --ignore-all-space "...origin/$branchname"
 }
-
-__git_complete git_preview_merge _git_checkout
+#__git_complete git_preview_merge _git_checkout
 
 
 git_status_merged()
@@ -488,6 +487,14 @@ bitbucket_clone()
 gitlab_clone()
 {
     git clone git@gitlab.com:/$1.git
+}
+
+gitlab_wiki_link()
+{
+  relative_path="$( echo $1 | sed 's|.md||')"
+  uri="https://gitlab.com/coates/sb2/wikis"
+  url="$uri/$relative_path"
+  echo "$url"
 }
 
 # Add a remote to github
@@ -810,22 +817,28 @@ execute_remote_script()
 install_atom()
 {
   latest_page_url="https://github.com/atom/atom/releases/latest"
-  echo "getting latest download url from $latest_page_url"
   html_file_path="$(mktemp)"
-  curl --silent --location --output "$html_file_path" "$latest_page_url"
+  echo -n "getting latest download url from $latest_page_url and saving in $html_file_path ... "
+  curl --silent --location --output "$html_file_path" "$latest_page_url" || return
+  echo "done"
 
-  uri="$(cat "$html_file_path" | grep '.deb' | grep 'href=' | cut -d '"' -f 2)"
+  uri="$(cat "$html_file_path" | grep -E 'a href=\"\/atom\/atom\/releases\/download\/v(.+)\/atom-amd64\.deb\"' | cut -d '"' -f 2)"
   #url="https://github.com$uri"
   url="https://github.com$uri"
-  echo "downloading latest package from: $url"
   download_dir="$(mktemp -d)"
   package_path="$download_dir/atom-amd64.deb"
-  curl --location --progress-bar --output "$package_path" "$url"
+  echo "downloading latest package from: $url and saving to $package_path ... "
+  curl --location --progress-bar --output "$package_path" "$url" || return
+  echo "done"
 
   echo "installing from package: $package_path"
-  sudo dpkg -i "$package_path"
+  sudo dpkg -i "$package_path" || return
+  echo "done"
 
-  echo -e "latest atom installed\nuse:\n\n\tapm update\n\nto update atom's pacakges"
+  echo "upgrading apm"
+  apm upgrade --no-confirm --verbose
+
+  # echo -e "latest atom installed\nuse:\n\n\tapm update\n\nto update atom's pacakges"
 }
 
 build_2gb_swapfile()
