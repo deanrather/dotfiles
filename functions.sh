@@ -269,6 +269,15 @@ git_tagrc_push()
 	git push & git push --tags
 }
 
+
+gitlab_wiki_link()
+{
+  relative_path="$( echo $1 | sed 's|.md||')"
+  uri="https://gitlab.com/coates/sb2/wikis"
+  url="$uri/$relative_path"
+  echo "$url"
+}
+
 git_tagrc()
 {
 	# todo: check clean
