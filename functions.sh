@@ -330,6 +330,15 @@ git_tagrc_push()
 	git push & git push --tags
 }
 
+
+gitlab_wiki_link()
+{
+  relative_path="$( echo $1 | sed 's|.md||')"
+  uri="https://gitlab.com/coates/sb2/wikis"
+  url="$uri/$relative_path"
+  echo "$url"
+}
+
 git_tagrc()
 {
 	# todo: check clean
@@ -853,6 +862,14 @@ build_2gb_swapfile()
    sudo chmod 0600 /.swap
    sudo swapon /.swap
   fi
+}
+
+example_proxy_function()
+{
+  echo "all the args were: $@"
+  echo "the first arg was: $1"
+  shift
+  echo "the rest of the args were: $@"
 }
 
 # ---------------------------------
