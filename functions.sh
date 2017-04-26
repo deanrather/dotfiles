@@ -765,6 +765,14 @@ record_gif2()
   sudo apt-get install -y imagemagick mplayer gtk-recordmydesktop
 }
 
+example_proxy_function()
+{
+  echo "all the args were: $@"
+  echo "the first arg was: $1"
+  shift
+  echo "the rest of the args were: $@"
+}
+
 # ---------------------------------
 
 # Get list of misc functions defined
