@@ -1,16 +1,61 @@
 #!/bin/bash
 # functions.sh
 # misc functions to help with your workstation.
+# wget https://raw.githubusercontent.com/deanrather/dotfiles/master/functions.sh && source functions.sh
 
 # execute a command and display stderr in red
 color()(set -o pipefail;"$@" 2>&1>&3|sed $'s,.*,\e[31m&\e[m,'>&2)3>&1
 colour()(color $@)
+
 
 # Writes a log to ~/dotfile-logs/
 # Usage: echo <message> | log [<logfile name>]
 # eg: echo "hello world" | log
 # eg: echo "hello world" | log mylog.log
 log()
+{
+    local message
+    local date
+    local pid
+    local log_path
+
+    # If there are no args
+    if [ $# -eq 0 ]
+    then
+      # Read message from STDIN
+      read message
+    else
+      # get message from args
+      message="$*"
+    fi
+
+    # If dir does not exist, create it
+    [ -d ~/dotfile-logs ] || mkdir ~/dotfile-logs
+
+    log_basename=dotfiles.log
+
+    # Concatenate dir with basename
+    log_path=~/dotfile-logs/"$log_basename"
+
+    # Create logfile if it doesn't exist
+    touch "$log_path"
+
+    # Get current time in ISO8601 format
+    # eg: 2014-08-29T19:01:46+10:00
+    date=$(date +%F\T%T%z | sed 's/^.\{22\}/&:/')
+
+    # Get process ID
+    pid=$$
+
+    # Append message to log file
+    echo "$date $pid $message" >> "$log_path"
+}
+
+# Writes a log to ~/dotfile-logs/
+# Usage: echo <message> | log [<logfile name>]
+# eg: echo "hello world" | log
+# eg: echo "hello world" | log mylog.log
+log2()
 {
     local message
     # Read message from STDIN
@@ -148,6 +193,23 @@ execute_on_change()
     done
 }
 
+args_example_1()
+{
+  local apple=false
+  local banana=false
+
+  for arg in "$@"
+  do
+    case $arg in
+      -a|--apple) apple=true ;;
+      -b|--banana) banana=true ;;
+      *) echo "unknown argument: $arg" ;;
+    esac
+  done
+
+  echo "apple: $apple"
+  echo "banana: $banana"
+}
 
 # Displays "Press [ENTER] to cancel..."
 # Returns:
@@ -268,6 +330,15 @@ git_tagrc_push()
 	git push & git push --tags
 }
 
+
+gitlab_wiki_link()
+{
+  relative_path="$( echo $1 | sed 's|.md||')"
+  uri="https://gitlab.com/coates/sb2/wikis"
+  url="$uri/$relative_path"
+  echo "$url"
+}
+
 git_tagrc()
 {
 	# todo: check clean
@@ -347,6 +418,7 @@ git_preview_merge()
     branchname="$1"
     git diff --ignore-all-space "...origin/$branchname"
 }
+#__git_complete git_preview_merge _git_checkout
 
 
 git_status_merged()
@@ -424,6 +496,14 @@ bitbucket_clone()
 gitlab_clone()
 {
     git clone git@gitlab.com:/$1.git
+}
+
+gitlab_wiki_link()
+{
+  relative_path="$( echo $1 | sed 's|.md||')"
+  uri="https://gitlab.com/coates/sb2/wikis"
+  url="$uri/$relative_path"
+  echo "$url"
 }
 
 # Add a remote to github
@@ -708,61 +788,80 @@ install_powerline_fonts()
 	mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 }
 
-
 record_gif()
 {
-  # Install xrectsel
-  # https://github.com/lolilolicon/xrectsel
-  if ! which xrectsel >> /dev/null
-  then
-    sudo apt-get install -y dh-autoreconf libx11-dev
-
-    tmp_src_dir="$(mktemp -d)"
-    git clone https://github.com/lolilolicon/xrectsel.git "$tmp_src_dir"
-    cd "$tmp_src_dir"
-    ./bootstrap
-    ./configure --prefix /usr
-    make
-    tmp_install_dir="$(mktemp -d)"
-    sudo make install
-    cd -
-  fi
-
-  # Install xclip
-  which xclip  >> /dev/null || sudo apt-get install -y xclip
-
-  # Get output file path
-  local output_dir=~/Pictures
-  mkdir -p "$output_dir"
-  local default_filename="recording__$(date +%Y-%m-%d_%H-%M-%S)"
-  read -p "Filename [$default_filename]: " filename
-  test "$filename" || filename="$default_filename"
-  local output_file_path="$output_dir/$filename".gif
-
-  echo "default_filename: $default_filename"
-  echo "filename: $filename"
-  echo "output_file_path: $output_file_path"
-
-  # Display instructions
-  echo -en "\n\n\tSelect area to begin recording\n\tTo stop, highlight this window and press: q\n\n"
-
-  # Get coords
-  local coords=$(xrectsel "-s %wx%h -i :0.0+%x,%y")
-  test "$coords" || return 1
-
-  # Record Gif
-  local command="ffmpeg -f x11grab -video_size cif -framerate 25 $coords -pix_fmt rgb8 -loop 0 '$output_file_path'"
-  eval "$command"
-  echo -n "Gif recorded to $output_file_path"
-
-  # Copy path to clipboard
-  echo -n "$output_file_path" | xclip -selection clipboard
-  echo " and path copied to clipboard"
+  ~/dotfiles/functions/record_gif.sh
 }
 
-record_gif2()
+is_online()
 {
-  sudo apt-get install -y imagemagick mplayer gtk-recordmydesktop
+  IP="$1"
+  echo -n "$IP is "
+  if ping -c 1 "$IP" > /dev/null
+  then
+    echo "online"
+  else
+    echo "offline"
+  fi
+}
+
+serve_current_dir()
+{
+    which browser-sync || npm i -g browser-sync
+    sudo "$(which node)" "$(which browser-sync)" start --server --port 80
+}
+
+detect_ip_conflicts()
+{
+  sudo arp-scan -I eno1 -l
+}
+
+execute_remote_script()
+{
+  script_url="$1"
+  shift # removes the first arg from the list of args
+  curl -s "$script_url" | bash -s $@
+}
+
+install_atom()
+{
+  latest_page_url="https://github.com/atom/atom/releases/latest"
+  html_file_path="$(mktemp)"
+  echo -n "getting latest download url from $latest_page_url and saving in $html_file_path ... "
+  curl --silent --location --output "$html_file_path" "$latest_page_url" || return
+  echo "done"
+
+  uri="$(cat "$html_file_path" | grep -E 'a href=\"\/atom\/atom\/releases\/download\/v(.+)\/atom-amd64\.deb\"' | cut -d '"' -f 2)"
+  #url="https://github.com$uri"
+  url="https://github.com$uri"
+  download_dir="$(mktemp -d)"
+  package_path="$download_dir/atom-amd64.deb"
+  echo "downloading latest package from: $url and saving to $package_path ... "
+  curl --location --progress-bar --output "$package_path" "$url" || return
+  echo "done"
+
+  echo "installing from package: $package_path"
+  sudo dpkg -i "$package_path" || return
+  echo "done"
+
+  echo "upgrading apm"
+  apm upgrade --no-confirm --verbose
+
+  # echo -e "latest atom installed\nuse:\n\n\tapm update\n\nto update atom's pacakges"
+}
+
+build_2gb_swapfile()
+{
+  if [ "$(wc -l < /proc/swaps)" == "1" ]
+  then
+   echo "Making Swapfile"
+   sudo dd if=/dev/zero of=/.swap bs=1024 count=2M # 2GB Swapfile
+   sudo mkswap /.swap
+   echo "/.swap swap swap sw 0 0" | sudo tee -a /etc/fstab
+   sudo chown root:root /.swap
+   sudo chmod 0600 /.swap
+   sudo swapon /.swap
+  fi
 }
 
 example_proxy_function()
