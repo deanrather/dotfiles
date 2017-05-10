@@ -864,6 +864,14 @@ build_2gb_swapfile()
   fi
 }
 
+example_proxy_function()
+{
+  echo "all the args were: $@"
+  echo "the first arg was: $1"
+  shift
+  echo "the rest of the args were: $@"
+}
+
 # ---------------------------------
 
 # Get list of misc functions defined

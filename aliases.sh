@@ -30,6 +30,7 @@ alias vup="vagrant up"
 alias vssh="vagrant ssh"
 alias vs="vagrant status"
 alias vr="vagrant reload"
+alias vp="vagrant provision"
 
 
 # Git
