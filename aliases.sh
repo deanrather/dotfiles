@@ -47,6 +47,7 @@ alias gsu="git submodule update --init --recursive"
 alias gm="git merge -Xignore-space-change"
 alias git_no_merged="git branch -a --no-merged"
 alias git_logs_nice="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+alias git_current_commit="git rev-parse HEAD"
 
 # Tmux
 alias t="tmux"
