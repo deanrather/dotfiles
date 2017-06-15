@@ -20,6 +20,7 @@ alias docker-rm-all-containers='docker rm $(docker ps -qa)'
 alias docker-rm-all-images='docker rmi $(docker images -qa)'
 alias docker-rm-everything='docker-kill-all-containers; docker-rm-dangling-volumes; docker-rm-dangling-images; docker-rm-exited-containers; docker-rm-all-containers; docker-rm-all-images'
 alias docker-run-prev-image='docker run -it --rm "$(docker images -q | head -n 1)"'
+alias docker-rerun-prev-container='prev_container_id="$(docker ps -aq | head -n1)" && docker commit "$prev_container_id" "prev_container/$prev_container_id" && docker run -it "prev_container/$prev_container_id"'
 alias dc="docker-compose"
 alias dps="docker ps"
 
