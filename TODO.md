@@ -16,3 +16,9 @@ New machine guide:
 - `request_remote_user` on workstation
 - `add_remote_user` on new machine
 - `grant_user_superpowers` on new machine
+
+
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
+source ~/.profile

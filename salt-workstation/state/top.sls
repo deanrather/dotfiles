@@ -2,4 +2,5 @@ base:
   '*':
     - base
     - docker
-    - docker.compose
+    - apps
+    # - docker.compose
