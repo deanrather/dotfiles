@@ -18,7 +18,12 @@ New machine guide:
 - `grant_user_superpowers` on new machine
 
 
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
-export PATH=~/.npm-global/bin:$PATH
-source ~/.profile
+install node:
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &&
+sudo apt-get install -y nodejs &&
+mkdir -p ~/.npm-global &&
+npm config set prefix '~/.npm-global' &&
+export PATH=~/.npm-global/bin:$PATH &&
+source ~/.profile &&
+node --version &&
+npm --version
