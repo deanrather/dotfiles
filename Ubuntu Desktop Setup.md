@@ -66,6 +66,12 @@ For Build Scripts, or whatever.
 
 To use: run `on_hotkey <your command>` on the CLI.
 
+#### Creating a hotkey to paste the current time
+
+```
+bash -c 'sleep 0.3 && xdotool type "$(date)"'
+```
+
 ### Uninstall Bloatware
 
 	sudo apt-get purge -y thunderbird* unity-lens-music unity-lens-video unity-lens-photos unity-scope-audacious unity-scope-manpages unity-scope-calculator unity-scope-musicstores unity-scope-chromiumbookmarks unity-scope-musique unity-scope-clementine unity-scope-openclipart unity-scope-colourlovers unity-scope-devhelp unity-scope-texdoc unity-scope-firefoxbookmarks unity-scope-tomboy unity-scope-gdrive unity-scope-video-remote unity-scope-gmusicbrowser unity-scope-virtualbox unity-scope-gourmet unity-scope-yelp unity-scope-guayadeque unity-scope-zotero
