@@ -1,4 +1,5 @@
 autossh
+bc
 build-essential
 curl
 figlet
