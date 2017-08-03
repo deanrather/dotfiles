@@ -6,11 +6,16 @@ source ~/dotfiles/functions.sh
 # Clear default banner
 clear
 
-# banner="$(whoami) @ $(hostname)"
-banner="$(hostname)"
-strlen=${#banner}
-colwidth=$(($strlen*6))
-
+if [ -z "$BANNER" ]
+then
+  # banner="$(whoami) @ $(hostname)"
+  banner="$(hostname)"
+  strlen=${#banner}
+  colwidth=$(($strlen*6))
+else
+  banner="$BANNER"
+  colwidth=80
+fi
 
 # see `ll /usr/share/figlet/*.flf` for list of fonts
 # see `toilet -F` list for list of filters
