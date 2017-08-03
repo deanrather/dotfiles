@@ -8,10 +8,13 @@ clear
 
 # banner="$(whoami) @ $(hostname)"
 banner="$(hostname)"
+strlen=${#banner}
+colwidth=$(($strlen*6))
+
 
 # see `ll /usr/share/figlet/*.flf` for list of fonts
 # see `toilet -F` list for list of filters
-toilet -F border -f standard "  $banner  " | lolcat -S 108 -s 0.1 
+toilet -F border -f standard -w "$colwidth" "  $banner  " | lolcat -S 108 -s 0.1
 # toilet -F border -f standard "  $banner  "
 
 # Show Stats
