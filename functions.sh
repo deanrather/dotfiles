@@ -754,13 +754,17 @@ set_hostname()
 # Allows a user root access without password
 # Usage: grant_user_superpowers <username>
 # eg: grant_user_superpowers dean
+# If you manage to screw everything up, google: pkexec
 grant_user_superpowers()
 {
-  echo "funtion temporarily disabled for breaking 2 computers now. todo: check args";
-  exit 1
-  # pkexec to the rescue...
-    USERNAME="$1"
-    echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
+  # Check args
+  if [ -z "$1" ]; then
+  	echo "usage: grant_user_superpowers <username>";
+  	return 1;
+  fi;
+
+  USERNAME="$1"
+  echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
 	sudo chmod 0440 "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
 }
 
