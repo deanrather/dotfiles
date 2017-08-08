@@ -1,6 +1,28 @@
 # Dotfiles
 
-TODO: Info about these dotfiles.
+These are my dotfiles. There are many like them, but these are mine.
+
+This repo is designed to:
+
+- setup an ubuntu desktop just the way I like it
+- setup an ubuntu server just the way I like it
+- allow me to easy to quickly add and change things
+- allow me to easy to sync settings between multiple machines
+- allow other developers to easily fork, modify, and use themselves
+
+It does not:
+
+- contain any personally identifyable stuff (you're welcome to use it as-is!)
+- change any core default behavior (i.e. stuff that might mess up other things)
+
+## How's it work?
+
+There's 3 major parts to it:
+
+- The Setup Script -- this uses Salt to install and configure a bunch-o-programs
+- The Fuction Toolkit -- several utility functions that are helpfult to keep around
+- The Preferences -- settings, aliases, etc.
+
 
 ## Setup
 
@@ -18,6 +40,16 @@ which git >> /dev/null || sudo apt-get install -y git &&
 git clone "https://github.com/$GITHUB_REPO.git" ~/dotfiles &&
 ~/dotfiles/setup.sh
 ```
+
+## TOOD
+
+- finish fixing up the salt vs scripts vs functinos stuff
+- make sure to `sudo apt install linux-image-extra-$(uname -r) linux-image-extra-virtual`
+- incorperate Toolkit
+- get best fns from loveguy's scripts
+- update w/ thanks to loveguy
+- travis?
+- get the correct / latest docker+compose
 
 ## See Also
 

@@ -756,6 +756,9 @@ set_hostname()
 # eg: grant_user_superpowers dean
 grant_user_superpowers()
 {
+  echo "funtion temporarily disabled for breaking 2 computers now. todo: check args";
+  exit 1
+  # pkexec to the rescue...
     USERNAME="$1"
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
 	sudo chmod 0440 "/etc/sudoers.d/$USERNAME-sudo-nopasswd"
