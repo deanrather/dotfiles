@@ -1,7 +1,6 @@
 {
 	"auto_close_tags": false,
 	"auto_match_enabled": false,
-	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
 	"default_line_ending": "unix",
 	"detect_indentation": false,
 	"file_exclude_patterns":
