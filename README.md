@@ -2,6 +2,12 @@
 
 These are my dotfiles. There are many like them, but these are mine.
 
+**update:**
+- I've moved the banner to: https://github.com/deanrather/happy-banner
+- I'd reccomend this prompt over my own: https://github.com/magicmonty/bash-git-prompt
+- I'm moving the functions and stuff out into separate libs
+- I don't reccomend the salt stuff for a dev env
+
 This repo is designed to:
 
 - setup an ubuntu desktop just the way I like it
