@@ -2,6 +2,8 @@
 	"bootstrapped": true,
 	"in_process_packages":
 	[
+		"LineEndings",
+		"Tmux"
 	],
 	"installed_packages":
 	[
@@ -27,6 +29,6 @@
 		"SublimeLinter-shellcheck",
 		"Table Editor",
 		"Theme - itg.flat",
-		"Tmux"
+		"Tmux Syntax Highlight"
 	]
 }
