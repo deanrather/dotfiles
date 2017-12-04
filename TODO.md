@@ -18,19 +18,8 @@ New machine guide:
 - `grant_user_superpowers` on new machine
 
 
-install node:
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &&
-sudo apt-get install -y nodejs &&
-mkdir -p ~/.npm-global &&
-npm config set prefix '~/.npm-global' &&
-export PATH=~/.npm-global/bin:$PATH &&
-source ~/.profile &&
-node --version &&
-npm --version
 
 
-### allow exfat usbs and sd cards to work
-sudo apt-get install exfat-utils exfat-fuse
 
 
 ### setup a read-only network shared folder
@@ -59,13 +48,13 @@ sudo service smbd restart
 # note: not a huge fan of this after all... I'd rather just have bash scripts...
 
 
+
 ### Sublime
 
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add - &&
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list &&
 sudo apt-get update &&
 sudo apt-get install sublime-text
-
 
 
 ### Google Chrome
@@ -75,3 +64,28 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 sudo apt-get update &&
 sudo apt-get install -y google-chrome-stable
 
+
+### Dropbox
+
+sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E &&
+sudo add-apt-repository "deb http://linux.dropbox.com/ubuntu $(lsb_release -sc) main" &&
+sudo apt-get update &&
+sudo apt-get install -y dropbox
+
+
+### NodeJS
+
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &&
+sudo apt-get install -y nodejs &&
+mkdir -p ~/.npm-global &&
+npm config set prefix '~/.npm-global' &&
+export PATH=~/.npm-global/bin:$PATH &&
+source ~/.profile &&
+node --version &&
+npm --version
+
+
+### Drivers for exfat usbs and sd cards
+
+sudo apt-get update &&
+sudo apt-get install -y exfat-utils exfat-fuse
