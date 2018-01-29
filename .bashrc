@@ -110,11 +110,11 @@ fi
 
 # ---
 
-# Git Prompt
-GIT_PROMPT_ONLY_IN_REPO=1 source ~/.bash-git-prompt/gitprompt.sh
-
 # Happy Banner
 BANNER=dr.coates.io source /home/ubuntu/dev/happy-banner/banner.sh
+
+# Git Prompt
+GIT_PROMPT_ONLY_IN_REPO=1 source ~/.bash-git-prompt/gitprompt.sh
 
 # SB Toolkit
 source ~/dev/sb-toolkit/load.sh
@@ -126,11 +126,9 @@ then
   subl &
 fi
 
-
 export EDITOR=vim
 
 export PATH=~/.npm-global/bin:/home/ubuntu/bin:/home/ubuntu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-
 
 # This line is added by salt to know the zone of the instance in every moment
 PS1="($(ec2metadata  | grep availability-zone | awk '{print $2}'))$PS1"
