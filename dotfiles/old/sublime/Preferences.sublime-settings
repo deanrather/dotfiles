@@ -1,6 +1,7 @@
 {
 	"auto_close_tags": false,
 	"auto_match_enabled": false,
+	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
 	"default_line_ending": "unix",
 	"detect_indentation": false,
 	"file_exclude_patterns":
@@ -17,10 +18,12 @@
 		"node_modules",
 		".cache"
 	],
-	"font_size": 11,
+	"font_size": 12,
 	"highlight_line": true,
 	"ignored_packages":
 	[
+		"LineEndings",
+		"Tmux",
 		"Vintage"
 	],
 	"itg_sidebar_tree_medium": true,
