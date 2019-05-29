@@ -8,7 +8,7 @@
 #
 #   This snippet will download the aliases library and source it into your ~/.bashrc:
 # 
-#     wget -O ~/.tmux-aliases.lib.sh https://raw.githubusercontent.com/deanrather/dotfiles/master/.tmux-aliases.lib.sh && grep '^source ~/.tmux-aliases.lib.sh' ~/.bashrc || echo 'source ~/.tmux-aliases.lib.sh' >> ~/.bashrc
+#     wget -O ~/.tmux-aliases.lib.sh https://raw.githubusercontent.com/deanrather/dotfiles/master/.tmux-aliases.lib.sh && grep '^source ~/.tmux-aliases.lib.sh' ~/.bashrc || echo 'source ~/.tmux-aliases.lib.sh' >> ~/.bashrc && source ~/.bashrc
 #
 #
 # Summary:
